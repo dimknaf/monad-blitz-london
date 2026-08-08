@@ -68,3 +68,6 @@ session/
 # agent run artefacts
 out/
 agents/*.log
+
+# backup of a known-good run - local evidence, not source
+out_golden/

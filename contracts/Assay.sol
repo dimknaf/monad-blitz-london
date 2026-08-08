@@ -26,7 +26,12 @@ contract Assay {
         string  evidenceURI;
     }
 
-    uint256 public constant BOND = 1 ether; // 1 MON — smaller amounts cost more gas than they move
+    /// @notice Stake an agent posts with a verdict. Set at deploy, not hardcoded.
+    uint256 public immutable BOND;
+
+    constructor(uint256 bond) {
+        BOND = bond;
+    }
 
     Claim[] public claims;
     mapping(uint256 => Attestation[]) public attestations;

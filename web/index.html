@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ASSAY — agents that get paid to judge reality</title>
+<link rel="stylesheet" href="assay.css">
+</head>
+<body data-link="boot">
+
+<!-- ===== CRT TREATMENT — decoration only, never intercepts clicks ===== -->
+<div class="crt-scan" aria-hidden="true"></div>
+<div class="crt-flicker" aria-hidden="true"></div>
+<div class="crt-vig" aria-hidden="true"></div>
+
+<div class="app">
+
+  <!-- ===== 1 · HEADER ===== -->
+  <header class="hdr" id="hdr">
+    <div class="hdr-brand">
+      <div class="wordmark">ASSAY</div>
+      <div class="tagline">AGENTS THAT GET PAID TO JUDGE REALITY <span class="tag-em">&mdash; AND GET SLASHED WHEN THEY'RE WRONG</span></div>
+    </div>
+    <div class="hdr-meta">
+      <div class="chip"><span class="chip-k">CHAIN</span><span class="chip-v" data-f="chain_label"></span></div>
+      <div class="chip"><span class="chip-k">BLOCK</span><span class="chip-v hi tick" data-flag="block_changed" data-f="block"></span></div>
+      <div class="chip"><span class="chip-k">CONTRACT</span><a class="chip-v link" data-f="contract_short" data-href="explorer" data-title="contract_full" target="_blank" rel="noopener noreferrer"></a></div>
+      <div class="chip"><span class="chip-k">BOND</span><span class="chip-v" data-f="bond"></span></div>
+      <div class="chip"><span class="chip-k">UPD</span><span class="chip-v" data-f="updated"></span></div>
+    </div>
+    <div class="hdr-phase">
+      <span class="phase-k">PHASE</span>
+      <span class="phase-v k" data-kind="phase_kind" data-f="phase_label"></span><span class="cursor">&#9608;</span>
+      <span class="linkdown">LINK DOWN &middot; RETRYING</span>
+    </div>
+  </header>
+
+  <!-- ===== 2 · CLAIM ===== -->
+  <section class="panel claimwrap">
+    <h2 class="panel-title">CLAIM UNDER ASSAY</h2>
+    <div class="claim-host" id="claim-host" data-empty="NO CLAIM OPEN &mdash; STANDING BY"></div>
+  </section>
+
+  <main class="main">
+
+    <!-- ===== 3 · THREE AGENT COLUMNS ===== -->
+    <div class="agents" id="agents" data-empty="AWAITING PANEL &mdash; NO AGENTS REGISTERED"></div>
+
+    <div class="rail">
+      <!-- ===== 4 · VERDICT / MARKET / BET ===== -->
+      <section class="panel verdictwrap">
+        <h2 class="panel-title">VERDICT &amp; MARKET</h2>
+        <div class="verdict-host" id="verdict-host" data-empty="NO MARKET OPEN"></div>
+        <div class="bet" id="bet" data-flag="enabled">
+          <div class="bet-note" data-f="note"></div>
+          <div class="bet-btns" id="bet-btns" data-slot="buttons" data-empty="NO ACTIONS AVAILABLE"></div>
+        </div>
+      </section>
+
+      <!-- ===== 5 · POSITIONS / PAYOUT ===== -->
+      <section class="panel positions" id="positions" data-flag="present">
+        <h2 class="panel-title">POSITIONS &amp; PAYOUT</h2>
+        <div class="pos-empty">NO POSITIONS &mdash; MARKET NOT OPEN</div>
+        <div class="pos-body">
+          <div class="pos-head">
+            <div class="pos-headline k" data-kind="headline_kind" data-f="headline"></div>
+            <div class="pos-note" data-f="note"></div>
+          </div>
+          <div class="pos-rows" id="positions-rows" data-slot="positions" data-empty="NO BETS PLACED"></div>
+        </div>
+      </section>
+    </div>
+
+    <div class="band">
+      <!-- ===== GLOBAL SYSTEM FEED ===== -->
+      <section class="panel feedwrap">
+        <h2 class="panel-title">SYSTEM FEED</h2>
+        <div class="feed" id="feed" data-empty="NO EVENTS YET"></div>
+      </section>
+
+      <!-- ===== 6 · CHAIN LEDGER ===== -->
+      <section class="panel chainwrap">
+        <h2 class="panel-title">CHAIN LEDGER &middot; PROOF</h2>
+        <div class="chain-head">
+          <span>TIME</span><span>EVENT</span><span>TX</span><span>BLOCK</span><span>GAS</span><span>ST</span>
+        </div>
+        <div class="chain" id="chain" data-empty="NO TRANSACTIONS POSTED"></div>
+      </section>
+
+      <!-- ===== 7 · DETERMINISTIC PANEL ===== -->
+      <section class="panel sec" id="sec" data-kind="state_kind">
+        <h2 class="panel-title">DETERMINISTIC &middot; SEC EDGAR</h2>
+        <div class="sec-empty">NO DETERMINISTIC CLAIM SETTLED YET</div>
+        <div class="sec-body">
+          <div class="sec-top">
+            <div class="sec-ent-wrap">
+              <div class="mini">ENTITY</div>
+              <div class="sec-ent" data-f="entity"></div>
+              <div class="sec-cik" data-f="cik"></div>
+            </div>
+            <div class="sec-src">
+              <span class="badge src k" data-kind="source_kind" data-f="source"></span>
+              <div class="sec-note" data-f="source_note"></div>
+            </div>
+          </div>
+
+          <div class="kv"><span class="k-lbl">METRIC</span><span class="lead"></span><span class="k-val" data-f="metric"></span></div>
+          <div class="kv"><span class="k-lbl">PERIOD</span><span class="lead"></span><span class="k-val" data-f="period"></span></div>
+
+          <div class="sec-figure">
+            <div class="sec-value-wrap">
+              <div class="mini">REPORTED VALUE</div>
+              <div class="sec-value" data-f="value"></div>
+              <div class="sec-thr"><span class="mini">VS</span> <span class="thr-v" data-f="threshold"></span> <span class="thr-head" data-f="headroom"></span></div>
+            </div>
+            <div class="sec-outcome k" data-kind="outcome_kind">
+              <div class="mini">OUTCOME</div>
+              <div class="sec-outcome-v" data-f="outcome"></div>
+            </div>
+          </div>
+
+          <div class="sec-receipt">
+            <div class="mini">ON-CHAIN RECEIPT &middot; FILING</div>
+            <div class="rcpt-row">
+              <span class="rcpt-form" data-f="form"></span>
+              <span class="rcpt-acc" data-f="accession"></span>
+              <span class="rcpt-filed" data-f="filed"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="ftr">
+    <div class="bals" id="balances" data-empty="NO BALANCES"></div>
+    <div class="disclaimer">ALL TESTNET &middot; FAUCET TOKENS &middot; NO REAL VALUE</div>
+  </footer>
+</div>
+
+<noscript><div class="nojs">JAVASCRIPT REQUIRED &mdash; THIS TERMINAL RENDERS LIVE STATE</div></noscript>
+
+<!-- =====================================================================
+     TEMPLATES — all binding is declarative. assay.js only copies:
+       data-f     -> textContent            data-kind  -> data-k  (CSS colours off this)
+       data-href  -> href attribute         data-flag  -> data-v  (booleans, 1:1)
+       data-title -> title attribute        data-pct   -> style.width = n + '%'
+       data-id    -> data-idv  (opaque id handed straight back to the server)
+     Elements carrying data-stream / data-slot are binding boundaries: the
+     binder stops there so a parent bind never overwrites its children.
+     ===================================================================== -->
+
+<template id="tpl-claim">
+  <div class="claim">
+    <div class="claim-main">
+      <div class="claim-title" data-f="title"></div>
+      <div class="claim-text" data-f="claim"></div>
+    </div>
+    <div class="claim-hash">
+      <span class="brk tl">&#9484;</span><span class="brk tr">&#9488;</span>
+      <span class="brk bl">&#9492;</span><span class="brk br">&#9496;</span>
+      <div class="hash-lbl">SPEC HASH</div>
+      <div class="hash-val" data-f="spec_hash_short" data-title="spec_hash_full"></div>
+      <div class="hash-sub">THE QUESTION IS IMMUTABLE</div>
+    </div>
+  </div>
+</template>
+
+<template id="tpl-verdict">
+  <div class="vd">
+    <div class="vd-top">
+      <div class="vd-cell">
+        <div class="mini">TALLY</div>
+        <div class="vd-tally" data-f="tally"></div>
+      </div>
+      <div class="vd-cell right">
+        <div class="mini">STATUS</div>
+        <div class="vd-status k" data-kind="status_kind" data-f="status"></div>
+      </div>
+    </div>
+
+    <div class="vd-quorum">
+      <span class="k-lbl">QUORUM</span><span class="k-val" data-f="quorum_label"></span>
+      <span class="vd-dot">&middot;</span>
+      <span class="k-lbl">ATTESTATIONS</span><span class="k-val" data-f="attestations"></span>
+    </div>
+
+    <div class="market">
+      <div class="mkt-head">
+        <span class="mkt-side yes">YES</span>
+        <span class="mkt-implied" data-f="implied_yes_label"></span>
+        <span class="mkt-side no">NO</span>
+      </div>
+      <div class="bar"><div class="bar-yes" data-pct="implied_yes_pct"></div></div>
+      <div class="mkt-foot">
+        <span class="pool yes">POOL <b data-f="pool_yes"></b></span>
+        <span class="mkt-lbl">IMPLIED PROBABILITY</span>
+        <span class="pool no">POOL <b data-f="pool_no"></b></span>
+      </div>
+    </div>
+
+    <div class="slashes" data-slot="slashed" data-empty="NO BONDS SLASHED"></div>
+  </div>
+</template>
+
+<template id="tpl-slash">
+  <div class="slash">
+    <span class="slash-tag">SLASHED</span>
+    <span class="slash-sep">&middot;</span><span class="slash-ag">AGENT <b data-f="agent"></b></span>
+    <span class="slash-sep">&middot;</span><span class="slash-addr" data-f="address_short"></span>
+    <span class="slash-sep">&middot;</span><span class="slash-amt" data-f="amount"></span>
+  </div>
+</template>
+
+<template id="tpl-betbtn">
+  <button class="betbtn" type="button" data-kind="side_kind" data-disabled="disabled" data-id="id" data-f="label"></button>
+</template>
+
+<template id="tpl-pos">
+  <div class="pos" data-kind="status_kind">
+    <div class="pos-l1">
+      <span class="pos-who" data-f="who"></span>
+      <span class="pos-addr" data-f="address_short"></span>
+      <span class="pos-side k" data-kind="side_kind" data-f="side"></span>
+      <span class="pos-stake" data-f="stake"></span>
+      <span class="pos-status k" data-kind="status_kind" data-f="status"></span>
+    </div>
+    <div class="pos-l2">
+      <span class="pos-bal-b" data-f="balance_before"></span>
+      <span class="pos-arrow">&#9656;</span>
+      <span class="pos-bal-a" data-f="balance_after"></span>
+      <span class="pos-profit k" data-kind="profit_kind" data-f="profit"></span>
+    </div>
+    <div class="pos-l3">
+      <span class="mini">PAYOUT</span>
+      <span class="pos-payout" data-f="payout"></span>
+      <a class="pos-tx" data-f="tx_short" data-href="explorer" target="_blank" rel="noopener noreferrer"></a>
+    </div>
+  </div>
+</template>
+
+<template id="tpl-agent">
+  <section class="agent panel" data-kind="status_kind">
+    <div class="ag-head">
+      <div class="ag-key" data-f="key"></div>
+      <div class="ag-id">
+        <div class="ag-name" data-f="name"></div>
+        <div class="ag-brief" data-f="brief"></div>
+      </div>
+      <div class="ag-stat">
+        <span class="lamp"></span><span class="ag-status" data-f="status"></span><span class="cursor run">&#9608;</span>
+      </div>
+    </div>
+
+    <div class="ag-addr">
+      <span class="ag-acct" data-f="address_short"></span>
+      <span class="ag-bond">BOND <b data-f="bond"></b></span>
+    </div>
+
+    <div class="ag-verdict">
+      <div class="mini">VERDICT</div>
+      <div class="ag-vbig k" data-kind="verdict_kind" data-f="verdict"></div>
+      <div class="ag-outcome" data-kind="outcome_kind" data-f="outcome"></div>
+    </div>
+
+    <div class="ag-conf">
+      <div class="kv"><span class="k-lbl">CONFIDENCE</span><span class="lead"></span><span class="k-val hi" data-f="confidence"></span></div>
+      <div class="cbar"><div class="cbar-f" data-pct="confidence_pct"></div></div>
+    </div>
+
+    <div class="ag-meta">
+      <span class="k-lbl">ELAPSED</span><span class="k-val" data-f="elapsed"></span>
+      <span class="vd-dot">&middot;</span>
+      <span class="k-val" data-f="fetches"></span>
+    </div>
+
+    <div class="sub">TOOL LOG</div>
+    <div class="stream" data-stream data-empty="AWAITING TOOL CALLS"></div>
+
+    <div class="sub">REASONING</div>
+    <div class="reason" data-f="reasoning" data-empty="NO REASONING SUBMITTED"></div>
+
+    <div class="sub">CITATIONS</div>
+    <div class="cits" data-slot="citations" data-empty="NO CITATIONS"></div>
+  </section>
+</template>
+
+<template id="tpl-line">
+  <div class="line" data-kind="kind" data-flag="ok">
+    <span class="l-t" data-f="t"></span>
+    <span class="l-body">
+      <span class="l-x" data-f="text"></span>
+      <span class="l-d" data-f="detail"></span>
+    </span>
+  </div>
+</template>
+
+<template id="tpl-cit">
+  <div class="cit">
+    <div class="cit-top">
+      <span class="badge" data-flag="verified" data-f="verified_label"></span>
+      <a class="cit-url" data-f="url_short" data-href="url" data-title="url" target="_blank" rel="noopener noreferrer"></a>
+    </div>
+    <div class="cit-quote" data-f="quote"></div>
+    <div class="cit-detail" data-f="detail"></div>
+  </div>
+</template>
+
+<template id="tpl-feed">
+  <div class="frow" data-kind="kind" data-flag="ok">
+    <span class="f-t" data-f="t"></span>
+    <span class="f-a" data-f="agent"></span>
+    <span class="f-x" data-f="text"></span>
+    <span class="f-d" data-f="detail"></span>
+  </div>
+</template>
+
+<template id="tpl-chain">
+  <div class="crow">
+    <span class="c-t" data-f="t"></span>
+    <span class="c-l" data-f="label"></span>
+    <a class="c-x" data-f="tx_short" data-href="explorer" target="_blank" rel="noopener noreferrer"></a>
+    <span class="c-b" data-f="block"></span>
+    <span class="c-g" data-f="gas"></span>
+    <span class="c-s k" data-kind="status_kind" data-f="status"></span>
+  </div>
+</template>
+
+<template id="tpl-bal">
+  <span class="bal">
+    <span class="b-n" data-f="name"></span>
+    <span class="b-a" data-f="address_short"></span>
+    <span class="b-v" data-f="mon_label"></span>
+  </span>
+</template>
+
+<script src="assay.js"></script>
+</body>
+</html>

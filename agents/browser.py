@@ -58,7 +58,14 @@ class BrowserManager:
         if delay > 0:
             await asyncio.sleep(delay)
         await self.page.goto(url, timeout=settings.page_load_timeout)
-        await self.page.wait_for_load_state("networkidle", timeout=settings.page_load_timeout)
+        # DEVIATION from the skill, flagged: the skill waits for "networkidle". News sites
+        # with ad and telemetry beacons never go idle, so the wait burns its full budget on
+        # pages that already rendered — reuters.com cost 66s and returned 0 bytes, while the
+        # text we needed was present in milliseconds. Configurable, skill value still
+        # available via PAGE_WAIT_UNTIL=networkidle.
+        await self.page.wait_for_load_state(
+            settings.page_wait_until, timeout=settings.page_load_timeout
+        )
         return await self.page.inner_text("body")
 
     async def close(self):

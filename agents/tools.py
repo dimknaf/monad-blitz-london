@@ -118,6 +118,27 @@ async def visit_webpage(url: str) -> str:
     """
     global _fetches_ok
     t = time.time()
+
+    # PDF branch: crawl4ai renders HTML and returns 0 bytes on PDFs (verified: 6 empty
+    # fetches on the TSMC transcripts). MUST be PyMuPDF — pypdf and pdfplumber silently
+    # strip inter-word spaces on these files ("letmegiveyounotanumber").
+    if url.lower().split("?")[0].endswith(".pdf"):
+        try:
+            import fitz
+            import requests
+            from browser import CHROME_UA
+            r = requests.get(url, headers={"User-Agent": CHROME_UA}, timeout=60)
+            r.raise_for_status()
+            with fitz.open(stream=r.content, filetype="pdf") as doc:
+                pages = doc.page_count          # read INSIDE the with — closed doc raises
+                text = "\n".join(p.get_text() for p in doc)
+            _fetches_ok += 1
+            _record("visit_webpage", url, True, len(text), time.time() - t, f"pdf {pages}p")
+            return f"=== PDF: {url} ===\n\n{_truncate(text)}"
+        except Exception as e:
+            _record("visit_webpage", url, False, 0, time.time() - t, f"pdf: {str(e)[:120]}")
+            return f"ERROR: Failed to read PDF - {e}. Find an HTML version instead."
+
     if _crawl_browser:
         try:
             md = await _crawl_browser.fetch(url)

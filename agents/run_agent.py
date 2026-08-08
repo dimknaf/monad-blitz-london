@@ -48,16 +48,18 @@ async def main(key: str) -> int:
 
     try:
         result = await run_panel_agent(key, CLAIM_TSMC, SEED_URLS[key])
+
+        # WRITE BEFORE TEARDOWN. crawl4ai writes banners to stdout so stdout is not a clean
+        # channel, and the result file is the contract panel.py reads rather than the exit
+        # code — because the Playwright/crawl4ai teardown segfaults on Windows *after* a
+        # successful run. If this write sat after close(), a segfault would discard a
+        # verdict the agent had already earned.
+        out_dir = REPO_ROOT / "out"
+        out_dir.mkdir(exist_ok=True)
+        (out_dir / f"agent_{key}.json").write_text(json.dumps(result, indent=1), encoding="utf-8")
     finally:
         await crawl.close()
         await browser.close()
-
-    # crawl4ai writes its progress banners to STDOUT, so stdout is not a clean channel.
-    # The result file is the contract — panel.py reads this, not the exit code (the
-    # Playwright/crawl4ai teardown segfaults on Windows *after* a successful run).
-    out_dir = REPO_ROOT / "out"
-    out_dir.mkdir(exist_ok=True)
-    (out_dir / f"agent_{key}.json").write_text(json.dumps(result, indent=1), encoding="utf-8")
 
     log.info("agent %s -> verdict=%s in %ss -> out/agent_%s.json",
              key, result.get("verdict"), result.get("elapsed"), key)

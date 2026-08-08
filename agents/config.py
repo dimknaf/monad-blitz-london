@@ -23,12 +23,16 @@ class Settings(BaseSettings):
 
     # --- agent loop ---
     agent_max_turns: int = 12
+    agent_subagent_max_turns: int = 20
     tool_output_max_chars: int = 12000
+    panel_budget_seconds: int = 120   # hard wall-clock cap per agent; nothing else bounds a stall
 
     # --- browser (skill defaults 2.0/5.0/30000 are too slow for a 3-min demo) ---
     min_navigation_delay: float = 0.0
     max_navigation_delay: float = 1.0
     page_load_timeout: int = 60000  # ms
+    # skill uses "networkidle"; news sites never reach it, so they burn the whole budget
+    page_wait_until: str = "domcontentloaded"
 
     litellm_timeout: int = 600
     firecrawl_api_key: str = ""

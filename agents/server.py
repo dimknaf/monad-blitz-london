@@ -610,7 +610,9 @@ def state():
 
 @app.get("/<path:f>")
 def asset(f):
-    return send_from_directory(WEB, f)
+    # max_age=0: without it the browser caches assay.css and a CSS fix appears not to have
+    # landed. During a demo that reads as "the fix did not work" rather than "reload harder".
+    return send_from_directory(WEB, f, max_age=0, conditional=False)
 
 
 @app.post("/api/bet")

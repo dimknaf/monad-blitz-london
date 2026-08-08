@@ -649,3 +649,28 @@ body[data-link="down"] .linkdown{display:block}
 
 /* nothing in the rail may spill onto the band below */
 .rail, .verdictwrap, .positions { overflow: clip; overflow-clip-margin: 16px; }
+
+/* ══ FAIL-SAFE LAYOUT ═══════════════════════════════════════════════════
+   Everything above tries to fit 1920x1080 exactly. On any other screen the
+   fixed heights overflow and panels paint over each other. Nothing here is
+   worth a covered button, so: let the page be as tall as its content and
+   let the user scroll. Guarantees nothing is ever hidden, on any display. */
+html, body { height: auto !important; overflow: visible !important; }
+.app { height: auto !important; min-height: 0 !important; display: block !important; }
+.app > * { height: auto !important; }
+
+.rail, .verdictwrap, .positions, .agent, .feedwrap, .chainwrap, .sec,
+.claimwrap, .band, .lowband, .bottomband {
+  overflow: visible !important;
+  max-height: none !important;
+  height: auto !important;
+}
+.cits, .feed, .chain, .pos-rows, .sec-body, [data-stream] {
+  max-height: 260px !important;
+  overflow-y: auto !important;
+}
+/* the controls are the demo - give them room and never let them be overlapped */
+.bet, .runctl { position: relative !important; z-index: 20 !important; background: #050a06 !important; }
+.betbtn { min-height: 38px !important; height: auto !important; font-size: 15px !important; padding: 8px !important; }
+.runbtn { min-height: 52px !important; height: auto !important; font-size: 21px !important; padding: 10px !important; }
+.runctl { margin: 10px 0 18px !important; }

@@ -1,20 +1,20 @@
 {
  "meta": {
   "chain_label": "MONAD TESTNET \u00b7 CHAIN 10143",
-  "block": "52,000,907",
+  "block": "52,002,589",
   "block_changed": true,
   "contract_short": "0xA3A0\u20267BA5F",
   "contract_full": "0xA3A015F68289c9f4D959788CBddcc43655f7BA5F",
   "explorer": "https://testnet.monadscan.com/address/0xA3A015F68289c9f4D959788CBddcc43655f7BA5F",
   "bond": "0.1 MON",
-  "updated": "17:35:42",
-  "run_id": "1786206598",
-  "phase": "STANDING BY",
+  "updated": "17:44:13",
+  "run_id": "1786207139",
+  "phase_label": "STANDING BY",
   "phase_kind": "idle"
  },
  "claims": [
   {
-   "id": 2,
+   "id": 4,
    "kind": "judgement",
    "title": "TSMC signalled ACCELERATING AI-accelerator demand on its Q2 2026 call",
    "label": "MARKET 1 \u00b7 JUDGEMENT",
@@ -27,13 +27,14 @@
    "spec_uri": "https://github.com/dimknaf/monad-blitz-london/blob/main/data/claims/judgement.md",
    "status": "OPEN",
    "status_kind": "open",
-   "implied_yes_pct": 60,
-   "implied_yes_label": "60%",
-   "pool_yes": "1.20 MON",
-   "pool_no": "0.80 MON",
+   "implied_yes_pct": 50,
+   "implied_yes_label": "50%",
+   "pool_yes": "0.00 MON",
+   "pool_no": "0.00 MON",
    "quorum_label": "2 OF 3",
    "attestations": "0",
-   "tally": "NO ATTESTATIONS YET"
+   "tally": "NO ATTESTATIONS YET",
+   "slashed": []
   },
   {
    "id": 3,
@@ -55,42 +56,16 @@
    "pool_no": "0.00 MON",
    "quorum_label": "2 OF 3",
    "attestations": "0",
-   "tally": "NO ATTESTATIONS YET"
+   "tally": "NO ATTESTATIONS YET",
+   "slashed": []
   }
  ],
  "market": {
-  "present": true,
+  "present": false,
   "headline": "MARKET OPEN",
   "headline_kind": "open",
   "note": "PARIMUTUEL - WINNERS SPLIT THE LOSING POOL",
-  "positions": [
-   {
-    "who": "BETTOR 1",
-    "address_short": "0x0eDe\u2026522c",
-    "side": "YES",
-    "side_kind": "yes",
-    "stake": "1.20 MON",
-    "status": "OPEN",
-    "status_kind": "open",
-    "payout": "0.00 MON",
-    "profit": "-1.20 MON",
-    "profit_kind": "down",
-    "balance_after": "0.443 MON"
-   },
-   {
-    "who": "BETTOR 2",
-    "address_short": "0x6E76\u20265F2A",
-    "side": "NO",
-    "side_kind": "no",
-    "stake": "0.80 MON",
-    "status": "OPEN",
-    "status_kind": "open",
-    "payout": "0.00 MON",
-    "profit": "-0.80 MON",
-    "profit_kind": "down",
-    "balance_after": "0.461 MON"
-   }
-  ]
+  "positions": []
  },
  "bet_controls": {
   "enabled": true,
@@ -117,22 +92,22 @@
    "name": "COORD",
    "role": "OPERATOR",
    "address_short": "0x5D3E\u20262caE",
-   "mon": "22.477",
-   "mon_label": "22.477 MON"
+   "mon": "20.279",
+   "mon_label": "20.279 MON"
   },
   {
    "name": "AGENT A",
    "role": "ORACLE",
    "address_short": "0x6077\u2026b8dF",
-   "mon": "7.962",
-   "mon_label": "7.962 MON"
+   "mon": "8.000",
+   "mon_label": "8.000 MON"
   },
   {
    "name": "AGENT B",
    "role": "ORACLE",
    "address_short": "0x6F6E\u20266D21",
-   "mon": "7.970",
-   "mon_label": "7.970 MON"
+   "mon": "8.000",
+   "mon_label": "8.000 MON"
   },
   {
    "name": "AGENT C",
@@ -145,433 +120,128 @@
    "name": "BETTOR 1",
    "role": "BETTOR",
    "address_short": "0x0eDe\u2026522c",
-   "mon": "0.443",
-   "mon_label": "0.443 MON"
+   "mon": "1.500",
+   "mon_label": "1.500 MON"
   },
   {
    "name": "BETTOR 2",
    "role": "BETTOR",
    "address_short": "0x6E76\u20265F2A",
-   "mon": "0.461",
-   "mon_label": "0.461 MON"
+   "mon": "1.500",
+   "mon_label": "1.500 MON"
   }
  ],
+ "run_controls": {
+  "present": true,
+  "note": "PLACE A BET FIRST, THEN RUN THE PANEL",
+  "label": "\u25b8 RUN THE PANEL",
+  "running": false,
+  "disabled": false,
+  "kind": "ready"
+ },
  "agents": [
   {
    "key": "A",
-   "name": "Primary Source Analyst",
+   "name": "PRIMARY SOURCE ANALYST",
    "brief": "Reads only what management said and published",
    "address_short": "0x6077\u2026b8dF",
-   "status": "DONE",
-   "status_kind": "done",
-   "verdict": "YES",
-   "verdict_kind": "yes",
-   "confidence": "1.00",
-   "confidence_pct": 100,
-   "reasoning": "TSMC signalled an acceleration in AI-related demand through a significant upward revision of its full-year 2026 capital budget and the identification of a new growth driver. In the Q4 2025 call (15 January 2026), the company guided a 2026 capital budget of \"USD52 billion and USD56 billion\". By the Q2 2026 call (16 July 2026), management explicitly stated they had \"decided to raise our full-year 2026 capital budget to be between USD60 billion and USD64 billion\". This increase was specifically attributed to \"continued strong structural demand from our customers, including the newly emerging agentic AI market\". Because TSMC explicitly links its capital expenditures to \"growth opportunities in following years,\" increasing the budget specifically to support \"newly emerging\" AI demand constitutes a signal that growth is accelerating relative to the previous outlook.",
-   "elapsed": "18.6s",
-   "fetches": "3 SOURCES READ",
-   "lines": [
-    {
-     "t": "16:49:28",
-     "kind": "fetch",
-     "ok": true,
-     "text": "read TSMC's own investor site",
-     "detail": "22-page filing, 68,101 characters in 0.64s"
-    },
-    {
-     "t": "16:49:30",
-     "kind": "fetch",
-     "ok": true,
-     "text": "read TSMC's own investor site",
-     "detail": "19-page filing, 68,513 characters in 2.21s"
-    },
-    {
-     "t": "16:49:34",
-     "kind": "fetch",
-     "ok": true,
-     "text": "read TSMC's own investor site",
-     "detail": "22-page filing, 68,101 characters in 0.93s"
-    },
-    {
-     "t": "16:49:39",
-     "kind": "submit",
-     "ok": true,
-     "text": "submitted its verdict \u2014 YES",
-     "detail": "3 fetches"
-    }
-   ],
-   "citations": [
-    {
-     "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-01/51d09df96cd89ac19d65af39032b038dc2896a24/TSMC%204Q25%20Transcript.pdf",
-     "url_short": "investor.tsmc.com/english/encrypt/files/en\u202625%20Transcript.pdf",
-     "quote": "In 2026, we expect our capital budget to be between USD52 billion and USD56 billion",
-     "verified": true,
-     "verified_label": "VERIFIED",
-     "verified_kind": "verified",
-     "detail": "opened in this run - 68,513 B in 2.21s"
-    },
-    {
-     "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-07/547d1696765e05ce3adb81c108ce1c8c1682b80c/TSMC%202Q26%20Transcript.pdf",
-     "url_short": "investor.tsmc.com/english/encrypt/files/en\u202626%20Transcript.pdf",
-     "quote": "Given the continued strong structural demand from our customers, including the newly emerging agentic AI market, we have decided to raise our full-year 2026 capital budget to be between USD60 billion and USD64 billion",
-     "verified": true,
-     "verified_label": "VERIFIED",
-     "verified_kind": "verified",
-     "detail": "opened in this run - 68,101 B in 0.64s"
-    }
-   ]
+   "status": "WAITING",
+   "status_kind": "waiting",
+   "verdict": "\u2014",
+   "verdict_kind": "none",
+   "confidence": "\u2014",
+   "confidence_pct": 0,
+   "reasoning": "",
+   "elapsed": "\u2014",
+   "fetches": "0 SOURCES READ",
+   "bond": "\u2014",
+   "outcome": "",
+   "outcome_kind": "none",
+   "lines": [],
+   "citations": []
   },
   {
    "key": "B",
-   "name": "Sell-Side Analyst",
+   "name": "SELL-SIDE ANALYST",
    "brief": "Reads what professional analysts concluded",
    "address_short": "0x6F6E\u20266D21",
-   "status": "DONE",
-   "status_kind": "done",
-   "verdict": "YES",
-   "verdict_kind": "yes",
-   "confidence": "0.90",
-   "confidence_pct": 90,
-   "reasoning": "TSMC signalled an acceleration in growth by raising its full-year 2026 revenue growth outlook from 'close to 30%' (as guided on the January 15, 2026 call) to 'slightly above 40%' (as guided on the July 16, 2026 call). The evidence from the Q2 2026 call and associated analyst reports (e.g., Investing.com, VanEck) attributes this upward revision specifically to AI demand outpacing supply and the rise of new workloads like 'agentic AI'. In sell-side terms, an upward revision of the growth rate (from ~30% to >40%) is the definitive evidence that growth is accelerating relative to the prior outlook.",
-   "elapsed": "32.4s",
-   "fetches": "4 SOURCES READ",
-   "lines": [
-    {
-     "t": "16:49:26",
-     "kind": "fetch",
-     "ok": true,
-     "text": "read Yahoo Finance",
-     "detail": "page, 3,742 characters in 3.92s"
-    },
-    {
-     "t": "16:49:27",
-     "kind": "fetch",
-     "ok": true,
-     "text": "read Motley Fool",
-     "detail": "page, 77,398 characters in 4.5s"
-    },
-    {
-     "t": "16:49:30",
-     "kind": "fetch",
-     "ok": true,
-     "text": "read Motley Fool",
-     "detail": "page, 77,398 characters in 1.26s"
-    },
-    {
-     "t": "16:49:36",
-     "kind": "search",
-     "ok": true,
-     "text": "searched for \u201cTSMC Q2 2026 earnings call transcript July 16 2026 AI accelerator demand\u201d",
-     "detail": "4.98s"
-    },
-    {
-     "t": "16:49:43",
-     "kind": "search",
-     "ok": true,
-     "text": "searched for \u201cTSMC Q4 2025 earnings call transcript January 15 2026 AI accelerator demand outl\u201d",
-     "detail": "5.45s"
-    },
-    {
-     "t": "16:49:47",
-     "kind": "fetch",
-     "ok": true,
-     "text": "read Motley Fool",
-     "detail": "page, 77,398 characters in 1.13s"
-    },
-    {
-     "t": "16:49:53",
-     "kind": "submit",
-     "ok": true,
-     "text": "submitted its verdict \u2014 YES",
-     "detail": "4 fetches"
-    }
-   ],
-   "citations": [
-    {
-     "url": "https://www.fool.com/earnings/call-transcripts/2026/07/16/tsm-tsm-q2-2026-earnings-call-transcript/",
-     "url_short": "fool.com/earnings/call-transcripts/2026/07\u2026gs-call-transcript/",
-     "quote": "AI-driven demand remains extremely strong... management saying demand for [accelerators]...",
-     "verified": false,
-     "verified_label": "UNVERIFIED",
-     "verified_kind": "unverified",
-     "detail": "cited via 'search result' - a snippet is not an opened document"
-    },
-    {
-     "url": "https://investing.com/news/transcripts/earnings-tsmc-lifts-2026-outlook-as-ai-demand-stays-strong-1000000",
-     "url_short": "investing.com/news/transcripts/earnings-ts\u2026tays-strong-1000000",
-     "quote": "TSMC raised its 2026 revenue-growth outlook to slightly above 40% in U.S. dollar terms.",
-     "verified": false,
-     "verified_label": "UNVERIFIED",
-     "verified_kind": "unverified",
-     "detail": "cited via 'search snippet' - a snippet is not an opened document"
-    },
-    {
-     "url": "https://investor.tsmc.com/TSMC",
-     "url_short": "investor.tsmc.com/TSMC",
-     "quote": "forecast our full year revenue to increase by close to 30%, in US dollar terms.",
-     "verified": false,
-     "verified_label": "UNVERIFIED",
-     "verified_kind": "unverified",
-     "detail": "cited via 'search snippet' - a snippet is not an opened document"
-    }
-   ]
+   "status": "WAITING",
+   "status_kind": "waiting",
+   "verdict": "\u2014",
+   "verdict_kind": "none",
+   "confidence": "\u2014",
+   "confidence_pct": 0,
+   "reasoning": "",
+   "elapsed": "\u2014",
+   "fetches": "0 SOURCES READ",
+   "bond": "\u2014",
+   "outcome": "",
+   "outcome_kind": "none",
+   "lines": [],
+   "citations": []
   },
   {
    "key": "C",
    "name": "FINANCIAL PRESS ANALYST",
    "brief": "Reads established press with editorial standards",
    "address_short": "0x6F78\u2026dd5b",
-   "status": "FALLBACK",
-   "status_kind": "failed",
-   "verdict": "YES",
-   "verdict_kind": "yes",
+   "status": "WAITING",
+   "status_kind": "waiting",
+   "verdict": "\u2014",
+   "verdict_kind": "none",
    "confidence": "\u2014",
    "confidence_pct": 0,
-   "reasoning": "DEMO FALLBACK \u2014 this agent did not finish its research in budget. The verdict shown is a placeholder, it is NOT a research result, and no bond was posted for it on chain.",
-   "elapsed": "120.0s",
-   "fetches": "1 SOURCES READ",
+   "reasoning": "",
+   "elapsed": "\u2014",
+   "fetches": "0 SOURCES READ",
    "bond": "\u2014",
-   "outcome": "NOT ON CHAIN",
+   "outcome": "",
    "outcome_kind": "none",
-   "lines": [
-    {
-     "t": "16:49:29",
-     "kind": "fetch",
-     "ok": true,
-     "text": "read CNBC",
-     "detail": "page, 31,182 characters in 6.5s"
-    },
-    {
-     "t": "16:50:29",
-     "kind": "error",
-     "ok": false,
-     "text": "could not open Reuters",
-     "detail": "timed out after 66.53s \u2014 it will find another source"
-    }
-   ],
+   "lines": [],
    "citations": []
   }
  ],
- "feed": [
-  {
-   "t": "16:49:26",
-   "agent": "B",
-   "kind": "fetch",
-   "ok": true,
-   "text": "SELL-SIDE read Yahoo Finance",
-   "detail": "page, 3,742 characters in 3.92s",
-   "id": 0
-  },
-  {
-   "t": "16:49:27",
-   "agent": "B",
-   "kind": "fetch",
-   "ok": true,
-   "text": "SELL-SIDE read Motley Fool",
-   "detail": "page, 77,398 characters in 4.5s",
-   "id": 1
-  },
-  {
-   "t": "16:49:28",
-   "agent": "A",
-   "kind": "fetch",
-   "ok": true,
-   "text": "PRIMARY SOURCE read TSMC's own investor site",
-   "detail": "22-page filing, 68,101 characters in 0.64s",
-   "id": 2
-  },
-  {
-   "t": "16:49:29",
-   "agent": "C",
-   "kind": "fetch",
-   "ok": true,
-   "text": "FINANCIAL PRESS read CNBC",
-   "detail": "page, 31,182 characters in 6.5s",
-   "id": 3
-  },
-  {
-   "t": "16:49:30",
-   "agent": "B",
-   "kind": "fetch",
-   "ok": true,
-   "text": "SELL-SIDE read Motley Fool",
-   "detail": "page, 77,398 characters in 1.26s",
-   "id": 4
-  },
-  {
-   "t": "16:49:30",
-   "agent": "A",
-   "kind": "fetch",
-   "ok": true,
-   "text": "PRIMARY SOURCE read TSMC's own investor site",
-   "detail": "19-page filing, 68,513 characters in 2.21s",
-   "id": 5
-  },
-  {
-   "t": "16:49:34",
-   "agent": "A",
-   "kind": "fetch",
-   "ok": true,
-   "text": "PRIMARY SOURCE read TSMC's own investor site",
-   "detail": "22-page filing, 68,101 characters in 0.93s",
-   "id": 6
-  },
-  {
-   "t": "16:49:36",
-   "agent": "B",
-   "kind": "search",
-   "ok": true,
-   "text": "SELL-SIDE searched for \u201cTSMC Q2 2026 earnings call transcript July 16 2026 AI accelerator demand\u201d",
-   "detail": "4.98s",
-   "id": 7
-  },
-  {
-   "t": "16:49:39",
-   "agent": "A",
-   "kind": "submit",
-   "ok": true,
-   "text": "PRIMARY SOURCE submitted its verdict \u2014 YES",
-   "detail": "3 fetches",
-   "id": 8
-  },
-  {
-   "t": "16:49:43",
-   "agent": "B",
-   "kind": "search",
-   "ok": true,
-   "text": "SELL-SIDE searched for \u201cTSMC Q4 2025 earnings call transcript January 15 2026 AI accelerator demand outl\u201d",
-   "detail": "5.45s",
-   "id": 9
-  },
-  {
-   "t": "16:49:47",
-   "agent": "B",
-   "kind": "fetch",
-   "ok": true,
-   "text": "SELL-SIDE read Motley Fool",
-   "detail": "page, 77,398 characters in 1.13s",
-   "id": 10
-  },
-  {
-   "t": "16:49:53",
-   "agent": "B",
-   "kind": "submit",
-   "ok": true,
-   "text": "SELL-SIDE submitted its verdict \u2014 YES",
-   "detail": "4 fetches",
-   "id": 11
-  },
-  {
-   "t": "16:50:29",
-   "agent": "C",
-   "kind": "error",
-   "ok": false,
-   "text": "FINANCIAL PRESS could not open Reuters",
-   "detail": "timed out after 66.53s \u2014 it will find another source",
-   "id": 12
-  }
- ],
+ "feed": [],
  "chain": [
   {
-   "t": "17:24:25",
-   "label": "OPEN CLAIM [JUDGEMENT]",
-   "tx_short": "0x3cb7\u202677b3",
-   "block": "51,998,696",
-   "gas": "244,965",
+   "t": "17:41:57",
+   "label": "FUND AGENT_A 0.04",
+   "tx_short": "0x83fc\u20264678",
+   "block": "52,002,149",
+   "gas": "21,000",
    "status": "OK",
    "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0x3cb724884aa5a1d0fad5aaad0fee696ffa86f6bdb6103d9be25b19f4fcc377b3"
+   "explorer": "https://testnet.monadscan.com/tx/0x83fc2ffae4cef5867473903f5178eb129b5da045717518a14999493a3df54678"
   },
   {
-   "t": "17:24:27",
-   "label": "OPEN CLAIM [DETERMINISTIC]",
-   "tx_short": "0x9c4b\u2026d527",
-   "block": "51,998,704",
-   "gas": "245,013",
+   "t": "17:41:57",
+   "label": "FUND AGENT_B 0.03",
+   "tx_short": "0xf510\u202665c8",
+   "block": "52,002,151",
+   "gas": "21,000",
    "status": "OK",
    "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0x9c4b2da8caf9e78e176837c4b3f6bc9cd5b84134bfda72e0bff4f34ac8d7d527"
+   "explorer": "https://testnet.monadscan.com/tx/0xf5103c5dc8bfba43025589e545e33e3f5047095d72565c5a198def9ea58465c8"
   },
   {
-   "t": "17:25:21",
-   "label": "BETTOR_1 STAKE 0.3 YES",
-   "tx_short": "0xb0d9\u2026c3a0",
-   "block": "51,998,882",
-   "gas": "97,672",
+   "t": "17:41:58",
+   "label": "FUND BETTOR_1 1.06",
+   "tx_short": "0x879d\u2026fa0f",
+   "block": "52,002,153",
+   "gas": "21,000",
    "status": "OK",
    "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0xb0d9de14d1a333bcabf2fa88c9ac28ed54c171af1106ea13c56abf12db90c3a0"
+   "explorer": "https://testnet.monadscan.com/tx/0x879d5ebe910f02ee5b97e8525504d41af3706b5a2e23b78ab66b07e3d383fa0f"
   },
   {
-   "t": "17:25:29",
-   "label": "BETTOR_2 STAKE 0.2 NO",
-   "tx_short": "0x67f4\u20263a1a",
-   "block": "51,998,908",
-   "gas": "97,647",
+   "t": "17:41:58",
+   "label": "FUND BETTOR_2 1.04",
+   "tx_short": "0x1922\u2026cd36",
+   "block": "52,002,155",
+   "gas": "21,000",
    "status": "OK",
    "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0x67f468d8f39ce14023f638e7028a9a4aba7c8a83000270a3f870c4f6a4e13a1a"
-  },
-  {
-   "t": "17:27:37",
-   "label": "BETTOR_1 STAKE 0.3 YES",
-   "tx_short": "0x1571\u2026ebe5",
-   "block": "51,999,320",
-   "gas": "63,336",
-   "status": "OK",
-   "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0x1571e15c8dc73b838bddc9fc122898a0b51ead56183db7174f85fb78f1b5ebe5"
-  },
-  {
-   "t": "17:27:40",
-   "label": "BETTOR_1 STAKE 0.3 YES",
-   "tx_short": "0x5aa4\u2026d42e",
-   "block": "51,999,331",
-   "gas": "63,336",
-   "status": "OK",
-   "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0x5aa499e3d43894270c48d14568f9d09dfdd3c6737be294437149c1bf2870d42e"
-  },
-  {
-   "t": "17:27:42",
-   "label": "BETTOR_2 STAKE 0.2 NO",
-   "tx_short": "0x9101\u2026f3a6",
-   "block": "51,999,336",
-   "gas": "63,311",
-   "status": "OK",
-   "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0x9101144e097f8175032a1c363b5ba97efa3827b7932075cbfa227c601fa6f3a6"
-  },
-  {
-   "t": "17:27:45",
-   "label": "BETTOR_2 STAKE 0.2 NO",
-   "tx_short": "0x5a09\u202639b1",
-   "block": "51,999,347",
-   "gas": "63,311",
-   "status": "OK",
-   "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0x5a09357e3ef857c0f871c5a9c73fc3689883804a9005c4566fc6b2dc694139b1"
-  },
-  {
-   "t": "17:27:49",
-   "label": "BETTOR_1 STAKE 0.3 YES",
-   "tx_short": "0x2253\u2026089b",
-   "block": "51,999,361",
-   "gas": "63,336",
-   "status": "OK",
-   "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0x22534b3f7d10b8aedaf030813192b030b6db16a1a785c3541b9b2e6ea03e089b"
-  },
-  {
-   "t": "17:30:53",
-   "label": "BETTOR_2 STAKE 0.2 NO",
-   "tx_short": "0xc5e2\u202606a6",
-   "block": "51,999,965",
-   "gas": "63,311",
-   "status": "OK",
-   "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0xc5e211adcbb2c9d99a3b1ff5263729f0210bc474cb1943f26a8732ffee8206a6"
+   "explorer": "https://testnet.monadscan.com/tx/0x192281bba08799123459ae284358128e7b22b241b738de02e41b13b7db79cd36"
   }
  ],
  "sec": {

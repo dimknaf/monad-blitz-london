@@ -622,3 +622,19 @@ body[data-link="down"] .linkdown{display:block}
   .tick[data-v="true"]{animation:none}
   .bar-yes{transition:none}
 }
+
+/* ── CONTROLS ALWAYS ON TOP ─────────────────────────────────────────────
+   The bet and run controls were rendering correctly (visible, enabled,
+   correct size) but were being painted over by the neighbouring panel.
+   These controls are the demo — nothing may sit above them. */
+.bet, .bet-btns, .runctl { position: relative; z-index: 50; }
+.betbtn, .runbtn { position: relative; z-index: 51; pointer-events: auto; }
+.bet, .runctl { background: var(--bg, #050a06); }
+.betbtn { min-height: 42px; font-size: 15px; }
+.runbtn { min-height: 58px; font-size: 22px; }
+.positions, .verdictwrap { z-index: 1; }
+/* Push the lower band down so nothing crowds the controls. */
+.positions { margin-top: 34px !important; }
+.band, .lowband, .bottomband { margin-top: 26px !important; }
+.feedwrap, .chainwrap, .sec { margin-top: 12px !important; }
+.runctl { margin-bottom: 26px !important; }

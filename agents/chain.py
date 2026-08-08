@@ -358,6 +358,23 @@ def fund():
     status()
 
 
+def reset():
+    """One command for a clean demo. Clears the last run's artefacts and opens fresh claims.
+
+    Stale out/agent_*.json is what makes the page look already-judged before anyone has bet:
+    the columns render the previous run's verdicts against a brand-new claim.
+    """
+    out = REPO_ROOT / "out"
+    for pat in ("agent_A.json", "agent_B.json", "agent_C.json",
+                "tools_A.jsonl", "tools_B.jsonl", "tools_C.jsonl", "chain.jsonl", "run.log"):
+        (out / pat).unlink(missing_ok=True)
+    print("cleared last run")
+    open_claim("judgement")
+    open_claim("deterministic")
+    print("")
+    print("CLEAN. Hard-reload the page (Ctrl+Shift+R), then bet, then RUN THE PANEL.")
+
+
 def status():
     w3 = connect()
     print(f"chain {w3.eth.chain_id}  block {w3.eth.block_number:,}  gas {w3.eth.gas_price/1e9:.0f} gwei")
@@ -385,5 +402,5 @@ if __name__ == "__main__":
     {
         "deploy": deploy, "open": open_claim, "bet": bet, "attest": attest,
         "finalize": finalize, "settle": settle, "payout": payout,
-        "fund": fund, "status": status,
+        "fund": fund, "reset": reset, "status": status,
     }.get(cmd, status)(*args)

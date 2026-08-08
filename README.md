@@ -155,28 +155,52 @@ Same contract, same market primitive. The contrast is the point.
 ### 4 · Deploy from scratch
 
 ```bash
-python agents/chain.py deploy       # writes out/contract.json
-python run_demo.py --reset          # the full arc, start to finish
-python agents/server.py             # the console -> http://127.0.0.1:8080
+python agents/chain.py deploy              # writes out/contract.json
+python agents/chain.py fund                # distribute MON to the six wallets
+python agents/chain.py open judgement      # market 1
+python agents/chain.py open deterministic  # market 2
+python agents/server.py                    # the console -> http://127.0.0.1:8080
 ```
 
-`run_demo.py --reset` opens both claims, places the two bets, runs the panel, posts the
-attestations, finalizes, pays out, and settles the SEC claim. Drop `--reset` to re-run just the
-research and resolution against the claims already open.
+Then place the bets from the page and press **RUN THE PANEL** — or run `python run_demo.py`,
+which does research → attest → finalize → payout → settle without touching the bets.
 
-### Individual steps
+### Reset between runs
 
 ```bash
-python agents/chain.py status       # balances, claims, implied probability
-python agents/chain.py open judgement
-python agents/chain.py bet BETTOR_1 yes 0.3
-python agents/panel.py              # the three oracles, in parallel
-python agents/chain.py attest
-python agents/chain.py finalize
-python agents/chain.py payout
-python agents/sec.py                # deterministic claim, standalone
-python agents/server.py snapshot    # bake web/state.json for a static deploy
+python agents/chain.py open judgement      # a fresh claim; the old one stays settled on chain
 ```
+
+Old claims are never overwritten — every run is permanently on
+[monadscan](https://testnet.monadscan.com/address/0xA3A015F68289c9f4D959788CBddcc43655f7BA5F).
+
+### Every command
+
+```bash
+python agents/chain.py status              # balances, claims, implied probability
+python agents/chain.py deploy              # deploy the contract
+python agents/chain.py fund                # top up all six wallets from COORD
+python agents/chain.py open <kind>         # judgement | deterministic
+python agents/chain.py bet BETTOR_1 yes 0.3
+python agents/panel.py                     # the three oracles, in parallel
+python agents/chain.py attest              # bonded verdicts on chain
+python agents/chain.py finalize            # tally and slash
+python agents/chain.py payout              # winners collect
+python agents/chain.py settle              # market 2, from the SEC filing
+python agents/sec.py                       # the SEC lookup on its own
+python agents/server.py                    # the console
+python agents/server.py snapshot           # bake web/state.json for a static deploy
+```
+
+### Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| Page looks stale | `python agents/server.py snapshot`, then reload |
+| `429 Too Many Requests` | The public RPC is rate-limiting. The page keeps serving the last good state; wait ~20s. Use a private RPC in `MONAD_RPC` if you have one. |
+| An oracle times out | Expected and handled — it posts no bond and is badged on the page. It is never counted as a dissent. |
+| `REVERTED` on attest | The claim is already resolved, or that wallet already attested. Open a fresh claim. |
+| Panel hangs | Ctrl-C. `attest` still works off the last good `out/agent_*.json`. |
 
 The console is plain HTML/CSS/JS with no build step, no framework and no external requests. All
 logic is server-side: the page fetches one file and copies strings onto nodes. The backend writes

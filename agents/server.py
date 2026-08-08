@@ -661,6 +661,17 @@ if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "snapshot":
         snapshot()
     else:
+        # REFUSE to be the second server. Every instance writes web/state.json on its own
+        # timer and holds its own _run state, so two of them alternate the payload every
+        # couple of seconds — buttons flicker and the panel looks like it started itself.
+        import socket
+        probe = socket.socket()
+        probe.settimeout(0.5)
+        if probe.connect_ex(("127.0.0.1", 8080)) == 0:
+            probe.close()
+            raise SystemExit("ASSAY is already running at http://127.0.0.1:8080 - not starting a second one.")
+        probe.close()
+
         # Warm the file if we can, but never die trying: an existing state.json from the
         # last run is a perfectly good first paint, and the refresher will replace it within
         # seconds. A rate-limited RPC must not be able to stop the console from starting.

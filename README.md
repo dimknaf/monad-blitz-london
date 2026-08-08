@@ -78,18 +78,69 @@ it went. Specs live in [`data/claims/`](data/claims/).
 
 ## Run it
 
-```bash
-pip install openai-agents litellm playwright crawl4ai web3 flask pymupdf python-dotenv
-playwright install chromium
+### 1 · Install
 
-cp .env.example .env        # add your keys
-python agents/chain.py deploy
-python run_demo.py --reset  # the full arc
-python agents/server.py     # the console, http://127.0.0.1:8080
+```bash
+pip install openai-agents litellm playwright crawl4ai web3 flask pymupdf python-dotenv requests
+playwright install chromium
 ```
 
-The console is plain HTML/CSS/JS with no build step. All logic is server-side — the page renders
-strings it is handed and computes nothing.
+### 2 · Configure
+
+Create `.env` in the repo root:
+
+```bash
+DEEPINFRA_API_KEY=          # the three research agents
+FIRECRAWL_API_KEY=          # optional: WEB_BACKEND=firecrawl, for bad wifi
+MONAD_RPC=https://testnet-rpc.monad.xyz
+SEC_IDENTITY=Your Name your@email.com   # data.sec.gov rejects anonymous requests
+
+COORD_PK=      COORD_ADDR=              # market operator
+AGENT_A_PK=    AGENT_A_ADDR=            # oracle
+AGENT_B_PK=    AGENT_B_ADDR=            # oracle
+AGENT_C_PK=    AGENT_C_ADDR=            # oracle
+BETTOR_1_PK=   BETTOR_1_ADDR=           # punter
+BETTOR_2_PK=   BETTOR_2_ADDR=           # punter
+
+AGENT_MAX_TURNS=10
+PAGE_LOAD_TIMEOUT=150000
+PANEL_BUDGET_SECONDS=240   # hard wall-clock cap per agent
+```
+
+Generate the six throwaway keys with `eth_account`, then fund COORD from the
+[Monad testnet faucet](https://testnet.monad.xyz) and run `python agents/chain.py fund` to
+distribute. Oracles are funded above ~10 MON so Monad's reserve-balance throttle never bites.
+
+### 3 · Deploy and run
+
+```bash
+python agents/chain.py deploy       # writes out/contract.json
+python run_demo.py --reset          # the full arc, start to finish
+python agents/server.py             # the console -> http://127.0.0.1:8080
+```
+
+`run_demo.py --reset` opens both claims, places the two bets, runs the panel, posts the
+attestations, finalizes, pays out, and settles the SEC claim. Drop `--reset` to re-run just the
+research and resolution against the claims already open.
+
+### Individual steps
+
+```bash
+python agents/chain.py status       # balances, claims, implied probability
+python agents/chain.py open judgement
+python agents/chain.py bet BETTOR_1 yes 0.3
+python agents/panel.py              # the three oracles, in parallel
+python agents/chain.py attest
+python agents/chain.py finalize
+python agents/chain.py payout
+python agents/sec.py                # deterministic claim, standalone
+python agents/server.py snapshot    # bake web/state.json for a static deploy
+```
+
+The console is plain HTML/CSS/JS with no build step, no framework and no external requests. All
+logic is server-side: the page fetches one file and copies strings onto nodes. The backend writes
+`web/state.json` on a background thread, so a rate-limited RPC can never stall the page — and that
+same file is what a static deploy serves.
 
 ## Stack
 

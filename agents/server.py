@@ -15,6 +15,7 @@ import os
 import re
 import subprocess
 import sys
+import threading
 import time
 from pathlib import Path
 
@@ -470,23 +471,33 @@ def build_state_resilient(tries: int = 3) -> dict:
         except Exception as e:
             if "429" not in str(e) or i == tries - 1:
                 raise
-            time.sleep(0.6 * (i + 1))
+            time.sleep(1.5 * (i + 1))
     raise RuntimeError("unreachable")
 
 
-def cached_state() -> dict:
-    now = time.time()
-    if _cache["v"] is None or now - _cache["t"] > 3.0:
+def refresher():
+    """Rebuild state on a background thread and write it to web/state.json, forever.
+
+    A request must NEVER wait on the chain. The RPC 429s under load and the retry backoff
+    can run past twenty seconds — long enough for the projector to sit on a blank page while
+    a poll blocks. So the page reads a plain file and the chain work happens off to one side.
+
+    The file is also exactly the artefact the static deploy serves, so the live console and
+    the replay are the same code path rather than two things that can drift apart.
+    """
+    while True:
         try:
-            _cache["v"] = build_state_resilient()
-            _cache["t"] = now
+            write_state(build_state_resilient())
         except Exception as e:
-            if _cache["v"] is None:
-                raise
-            # Serve the last good payload rather than blanking the projector.
-            _cache["v"].setdefault("meta", {})["updated"] = f"stale - {type(e).__name__}"
-            _cache["t"] = now - 1.0
-    return _cache["v"]
+            print(f"  refresh failed, keeping last good state: {type(e).__name__}")
+        time.sleep(2.0)
+
+
+def write_state(payload: dict):
+    WEB.mkdir(exist_ok=True)
+    tmp = WEB / "state.json.tmp"        # write-then-rename: a poll never sees a half-file
+    tmp.write_text(json.dumps(payload, indent=1), encoding="utf-8")
+    tmp.replace(WEB / "state.json")
 
 
 # ---------------------------------------------------------------------- routes
@@ -498,7 +509,9 @@ def index():
 
 @app.get("/state.json")
 def state():
-    return jsonify(cached_state())
+    # A file read. The chain is never touched on the request path.
+    return send_from_directory(WEB, "state.json", mimetype="application/json",
+                               max_age=0, conditional=False)
 
 
 @app.get("/<path:f>")
@@ -515,7 +528,7 @@ def api_bet():
         return jsonify({"ok": False, "error": "unknown button"}), 400
     try:
         chain.bet(*pick)
-        _cache["t"] = 0.0                      # force a fresh read on the next poll
+        write_state(build_state_resilient())   # repaint immediately, don't wait for the tick
         return jsonify({"ok": True})
     except SystemExit as e:
         return jsonify({"ok": False, "error": str(e)}), 400
@@ -528,8 +541,7 @@ def api_run():
 
 
 def snapshot():
-    WEB.mkdir(exist_ok=True)
-    (WEB / "state.json").write_text(json.dumps(build_state(), indent=1), encoding="utf-8")
+    write_state(build_state_resilient(tries=6))
     print(f"baked {WEB / 'state.json'}")
 
 
@@ -537,5 +549,16 @@ if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "snapshot":
         snapshot()
     else:
+        # Warm the file if we can, but never die trying: an existing state.json from the
+        # last run is a perfectly good first paint, and the refresher will replace it within
+        # seconds. A rate-limited RPC must not be able to stop the console from starting.
+        print("warming state...")
+        try:
+            write_state(build_state_resilient())
+        except Exception as e:
+            have = (WEB / "state.json").exists()
+            print(f"  warm-up failed ({type(e).__name__}); "
+                  f"{'serving the last good state.json' if have else 'starting empty'}")
+        threading.Thread(target=refresher, daemon=True).start()
         print("ASSAY -> http://127.0.0.1:8080")
         app.run(host="127.0.0.1", port=8080, threaded=True)

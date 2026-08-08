@@ -623,18 +623,29 @@ body[data-link="down"] .linkdown{display:block}
   .bar-yes{transition:none}
 }
 
-/* ── CONTROLS ALWAYS ON TOP ─────────────────────────────────────────────
-   The bet and run controls were rendering correctly (visible, enabled,
-   correct size) but were being painted over by the neighbouring panel.
-   These controls are the demo — nothing may sit above them. */
-.bet, .bet-btns, .runctl { position: relative; z-index: 50; }
-.betbtn, .runbtn { position: relative; z-index: 51; pointer-events: auto; }
-.bet, .runctl { background: var(--bg, #050a06); }
-.betbtn { min-height: 42px; font-size: 15px; }
-.runbtn { min-height: 58px; font-size: 22px; }
-.positions, .verdictwrap { z-index: 1; }
-/* Push the lower band down so nothing crowds the controls. */
-.positions { margin-top: 34px !important; }
-.band, .lowband, .bottomband { margin-top: 26px !important; }
-.feedwrap, .chainwrap, .sec { margin-top: 12px !important; }
-.runctl { margin-bottom: 26px !important; }
+
+/* ── CONTROLS FIT, THEY DO NOT FLOAT ────────────────────────────────────
+   Raising z-index only made the overflow paint over the panels below it.
+   The real problem is height: verdict + bet + run + positions needed more
+   room than the rail had. Compact the controls so the column fits. */
+.bet, .runctl { position: relative; z-index: 5; background: #050a06; flex: 0 0 auto; }
+.betbtn, .runbtn { position: relative; z-index: 6; }
+
+.bet { margin: 4px 0 0 !important; padding: 4px 0 0 !important; }
+.bet-note { font-size: 10px !important; margin: 0 0 3px !important; line-height: 1.2 !important; }
+.bet-btns { gap: 8px !important; }
+.betbtn { min-height: 30px !important; height: 30px !important; font-size: 13px !important;
+          padding: 0 6px !important; letter-spacing: .02em !important; }
+
+.runctl { margin: 6px 0 0 !important; padding: 0 !important; }
+.runbtn { min-height: 38px !important; height: 38px !important; font-size: 17px !important;
+          letter-spacing: .06em !important; }
+.runctl .run-note, .runctl div:last-child { font-size: 10px !important; margin-top: 3px !important; }
+
+/* buy the space back from the readouts above */
+.verdictwrap { padding-bottom: 4px !important; }
+.implied, .tally { margin: 2px 0 !important; }
+.positions { margin-top: 10px !important; }
+
+/* nothing in the rail may spill onto the band below */
+.rail, .verdictwrap, .positions { overflow: clip; overflow-clip-margin: 16px; }

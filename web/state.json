@@ -1,46 +1,54 @@
 {
  "meta": {
   "chain_label": "MONAD TESTNET \u00b7 CHAIN 10143",
-  "block": "51,998,296",
+  "block": "52,000,907",
   "block_changed": true,
   "contract_short": "0xA3A0\u20267BA5F",
   "contract_full": "0xA3A015F68289c9f4D959788CBddcc43655f7BA5F",
   "explorer": "https://testnet.monadscan.com/address/0xA3A015F68289c9f4D959788CBddcc43655f7BA5F",
   "bond": "0.1 MON",
-  "updated": "17:22:26",
-  "run_id": "1786206065",
-  "phase": "COMPLETE",
-  "phase_kind": "done"
+  "updated": "17:35:42",
+  "run_id": "1786206598",
+  "phase": "STANDING BY",
+  "phase_kind": "idle"
  },
  "claims": [
   {
-   "id": 0,
+   "id": 2,
    "kind": "judgement",
    "title": "TSMC signalled ACCELERATING AI-accelerator demand on its Q2 2026 call",
+   "label": "MARKET 1 \u00b7 JUDGEMENT",
+   "resolved_by": "RESOLVED BY THREE BONDED ORACLES",
+   "resolved_note": "NO FEED EXISTS - AGENTS JUDGE, AND ARE SLASHED WHEN THEY ARE WRONG",
+   "cost": "COSTS A RESEARCH BOUNTY",
    "claim": "On its Q2 2026 earnings call held 16 July 2026, TSMC signalled that growth in AI-accelerator demand is ACCELERATING \u2014 getting faster, not merely continuing at the pace it described previously \u2014 relative to the outlook it gave on its Q4 2025 call of 15 January 2026.",
    "spec_hash_full": "0xca4c7ff7e66ab0ae25d54b30898279b52a2153f9391ecc89b5a9d7816ac3243b",
    "spec_hash_short": "0xca4c7f\u2026c3243b",
    "spec_uri": "https://github.com/dimknaf/monad-blitz-london/blob/main/data/claims/judgement.md",
-   "status": "RESOLVED YES",
-   "status_kind": "yes",
+   "status": "OPEN",
+   "status_kind": "open",
    "implied_yes_pct": 60,
    "implied_yes_label": "60%",
-   "pool_yes": "0.30 MON",
-   "pool_no": "0.20 MON",
+   "pool_yes": "1.20 MON",
+   "pool_no": "0.80 MON",
    "quorum_label": "2 OF 3",
-   "attestations": "2",
-   "tally": "2 YES / 0 NO"
+   "attestations": "0",
+   "tally": "NO ATTESTATIONS YET"
   },
   {
-   "id": 1,
+   "id": 3,
    "kind": "deterministic",
    "title": "ARM Holdings plc FY2026 revenue exceeded $4.5 billion",
+   "label": "MARKET 2 \u00b7 DETERMINISTIC",
+   "resolved_by": "RESOLVED BY ONE SEC FILING",
+   "resolved_note": "NOTHING TO JUDGE - NO PANEL, NO BONDS, NOBODY SLASHED",
+   "cost": "COSTS ONE HTTP REQUEST",
    "claim": "ARM Holdings plc reported revenue greater than USD 4,500,000,000 for the fiscal year ended 31 March 2026.",
    "spec_hash_full": "0x26149bb79a77be99799ae4e75e03cc8681aebbbeda260b3dbcf5510ed5d2c04c",
    "spec_hash_short": "0x26149b\u2026d2c04c",
    "spec_uri": "https://github.com/dimknaf/monad-blitz-london/blob/main/data/claims/deterministic.md",
-   "status": "RESOLVED YES",
-   "status_kind": "yes",
+   "status": "OPEN",
+   "status_kind": "open",
    "implied_yes_pct": 50,
    "implied_yes_label": "50%",
    "pool_yes": "0.00 MON",
@@ -52,8 +60,8 @@
  ],
  "market": {
   "present": true,
-  "headline": "SETTLED - YES",
-  "headline_kind": "yes",
+  "headline": "MARKET OPEN",
+  "headline_kind": "open",
   "note": "PARIMUTUEL - WINNERS SPLIT THE LOSING POOL",
   "positions": [
    {
@@ -61,46 +69,46 @@
     "address_short": "0x0eDe\u2026522c",
     "side": "YES",
     "side_kind": "yes",
-    "stake": "0.30 MON",
-    "status": "COLLECTED",
-    "status_kind": "won",
-    "payout": "0.50 MON",
-    "profit": "+0.20 MON",
-    "profit_kind": "up",
-    "balance_after": "1.673 MON"
+    "stake": "1.20 MON",
+    "status": "OPEN",
+    "status_kind": "open",
+    "payout": "0.00 MON",
+    "profit": "-1.20 MON",
+    "profit_kind": "down",
+    "balance_after": "0.443 MON"
    },
    {
     "who": "BETTOR 2",
     "address_short": "0x6E76\u20265F2A",
     "side": "NO",
     "side_kind": "no",
-    "stake": "0.20 MON",
-    "status": "LOST",
-    "status_kind": "lost",
+    "stake": "0.80 MON",
+    "status": "OPEN",
+    "status_kind": "open",
     "payout": "0.00 MON",
-    "profit": "-0.20 MON",
+    "profit": "-0.80 MON",
     "profit_kind": "down",
-    "balance_after": "1.290 MON"
+    "balance_after": "0.461 MON"
    }
   ]
  },
  "bet_controls": {
-  "enabled": false,
-  "note": "BETTING CLOSED - CLAIM RESOLVED",
+  "enabled": true,
+  "note": "CLAIM IS OPEN - STAKE TO MOVE THE PRICE",
   "buttons": [
    {
     "id": "yes",
     "label": "STAKE 0.3 MON \u25b8 YES",
     "side_kind": "yes",
-    "enabled": false,
-    "disabled": true
+    "enabled": true,
+    "disabled": false
    },
    {
     "id": "no",
     "label": "STAKE 0.2 MON \u25b8 NO",
     "side_kind": "no",
-    "enabled": false,
-    "disabled": true
+    "enabled": true,
+    "disabled": false
    }
   ]
  },
@@ -109,8 +117,8 @@
    "name": "COORD",
    "role": "OPERATOR",
    "address_short": "0x5D3E\u20262caE",
-   "mon": "22.527",
-   "mon_label": "22.527 MON"
+   "mon": "22.477",
+   "mon_label": "22.477 MON"
   },
   {
    "name": "AGENT A",
@@ -137,15 +145,15 @@
    "name": "BETTOR 1",
    "role": "BETTOR",
    "address_short": "0x0eDe\u2026522c",
-   "mon": "1.673",
-   "mon_label": "1.673 MON"
+   "mon": "0.443",
+   "mon_label": "0.443 MON"
   },
   {
    "name": "BETTOR 2",
    "role": "BETTOR",
    "address_short": "0x6E76\u20265F2A",
-   "mon": "1.290",
-   "mon_label": "1.290 MON"
+   "mon": "0.461",
+   "mon_label": "0.461 MON"
   }
  ],
  "agents": [
@@ -212,10 +220,7 @@
      "verified_kind": "verified",
      "detail": "opened in this run - 68,101 B in 0.64s"
     }
-   ],
-   "bond": "0.1 MON",
-   "outcome": "PAID",
-   "outcome_kind": "majority"
+   ]
   },
   {
    "key": "B",
@@ -310,10 +315,7 @@
      "verified_kind": "unverified",
      "detail": "cited via 'search snippet' - a snippet is not an opened document"
     }
-   ],
-   "bond": "0.1 MON",
-   "outcome": "PAID",
-   "outcome_kind": "majority"
+   ]
   },
   {
    "key": "C",
@@ -330,7 +332,7 @@
    "elapsed": "120.0s",
    "fetches": "1 SOURCES READ",
    "bond": "\u2014",
-   "outcome": "NO BOND AT RISK",
+   "outcome": "NOT ON CHAIN",
    "outcome_kind": "none",
    "lines": [
     {
@@ -472,179 +474,120 @@
  ],
  "chain": [
   {
-   "t": "16:39:25",
-   "label": "FUND AGENT_A 5.00",
-   "tx_short": "0xc56b\u20261a12",
-   "block": "51,989,852",
-   "gas": "21,000",
-   "status": "OK",
-   "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0xc56b323a6a9a2dde525b50aa4b76bc96c76b954d1fad336b3dc12e5d2c8c1a12"
-  },
-  {
-   "t": "16:39:25",
-   "label": "FUND AGENT_B 5.00",
-   "tx_short": "0x4767\u20261e25",
-   "block": "51,989,853",
-   "gas": "21,000",
-   "status": "OK",
-   "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0x47670b851d9ef8c2970642c139ace72c3ffd731314c6239d7dbcfb37cc071e25"
-  },
-  {
-   "t": "16:39:25",
-   "label": "FUND AGENT_C 5.00",
-   "tx_short": "0x8a2d\u20267faa",
-   "block": "51,989,854",
-   "gas": "21,000",
-   "status": "OK",
-   "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0x8a2dc34ad7fe444a632a49c6d9b3d5ce17cbba5395f3b83053f5285002237faa"
-  },
-  {
-   "t": "16:39:26",
-   "label": "FUND BETTOR_1 1.50",
-   "tx_short": "0x2cde\u20268031",
-   "block": "51,989,855",
-   "gas": "21,000",
-   "status": "OK",
-   "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0x2cde1ccfd3320465ca64214d51b3f6786ed49007d22fb1d1fd25e98468168031"
-  },
-  {
-   "t": "16:39:26",
-   "label": "FUND BETTOR_2 1.50",
-   "tx_short": "0xa831\u20264b43",
-   "block": "51,989,856",
-   "gas": "21,000",
-   "status": "OK",
-   "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0xa831341297a9d274c45469a7690365b5e5fd3b0bf1e24f816ff0184f2a9f4b43"
-  },
-  {
-   "t": "16:39:42",
+   "t": "17:24:25",
    "label": "OPEN CLAIM [JUDGEMENT]",
-   "tx_short": "0x90c4\u20267fa2",
-   "block": "51,989,908",
-   "gas": "262,201",
+   "tx_short": "0x3cb7\u202677b3",
+   "block": "51,998,696",
+   "gas": "244,965",
    "status": "OK",
    "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0x90c402a19c396361eff954cf84e8456dca1414b6776215a4788c5c1af1f07fa2"
+   "explorer": "https://testnet.monadscan.com/tx/0x3cb724884aa5a1d0fad5aaad0fee696ffa86f6bdb6103d9be25b19f4fcc377b3"
   },
   {
-   "t": "16:39:43",
+   "t": "17:24:27",
    "label": "OPEN CLAIM [DETERMINISTIC]",
-   "tx_short": "0xd710\u2026a020",
-   "block": "51,989,913",
+   "tx_short": "0x9c4b\u2026d527",
+   "block": "51,998,704",
    "gas": "245,013",
    "status": "OK",
    "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0xd71026622cb61dc6da164e367f2454f22b24b1d8736f1864d48d6ec0735ca020"
+   "explorer": "https://testnet.monadscan.com/tx/0x9c4b2da8caf9e78e176837c4b3f6bc9cd5b84134bfda72e0bff4f34ac8d7d527"
   },
   {
-   "t": "16:39:57",
+   "t": "17:25:21",
    "label": "BETTOR_1 STAKE 0.3 YES",
-   "tx_short": "0x8bfd\u20261b1a",
-   "block": "51,989,958",
-   "gas": "97,660",
+   "tx_short": "0xb0d9\u2026c3a0",
+   "block": "51,998,882",
+   "gas": "97,672",
    "status": "OK",
    "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0x8bfd1acbff839462b1cc58276d7d65bb829c84eb830c45f5d72fbf47426b1b1a"
+   "explorer": "https://testnet.monadscan.com/tx/0xb0d9de14d1a333bcabf2fa88c9ac28ed54c171af1106ea13c56abf12db90c3a0"
   },
   {
-   "t": "16:39:59",
+   "t": "17:25:29",
    "label": "BETTOR_2 STAKE 0.2 NO",
-   "tx_short": "0x00f8\u2026c734",
-   "block": "51,989,964",
-   "gas": "97,634",
+   "tx_short": "0x67f4\u20263a1a",
+   "block": "51,998,908",
+   "gas": "97,647",
    "status": "OK",
    "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0x00f8c9e1e996edd0761be0a2f7a529e25a9deccc867e716a8786a646e1d2c734"
+   "explorer": "https://testnet.monadscan.com/tx/0x67f468d8f39ce14023f638e7028a9a4aba7c8a83000270a3f870c4f6a4e13a1a"
   },
   {
-   "t": "16:40:13",
-   "label": "AGENT_A ATTEST YES",
-   "tx_short": "0x18f6\u20261557",
-   "block": "51,990,010",
-   "gas": "331,470",
+   "t": "17:27:37",
+   "label": "BETTOR_1 STAKE 0.3 YES",
+   "tx_short": "0x1571\u2026ebe5",
+   "block": "51,999,320",
+   "gas": "63,336",
    "status": "OK",
    "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0x18f61b1b1bea2072bd8b324dd4fa61b6503c49646e654548e11e64dc3c981557"
+   "explorer": "https://testnet.monadscan.com/tx/0x1571e15c8dc73b838bddc9fc122898a0b51ead56183db7174f85fb78f1b5ebe5"
   },
   {
-   "t": "16:40:13",
-   "label": "AGENT_B ATTEST YES",
-   "tx_short": "0x1b3f\u202688a1",
-   "block": "51,990,012",
-   "gas": "255,661",
+   "t": "17:27:40",
+   "label": "BETTOR_1 STAKE 0.3 YES",
+   "tx_short": "0x5aa4\u2026d42e",
+   "block": "51,999,331",
+   "gas": "63,336",
    "status": "OK",
    "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0x1b3fd5425237b0547d0288bcf8286c9039af2395d4d1c9948c2d42b406bc88a1"
+   "explorer": "https://testnet.monadscan.com/tx/0x5aa499e3d43894270c48d14568f9d09dfdd3c6737be294437149c1bf2870d42e"
   },
   {
-   "t": "16:40:28",
-   "label": "FINALIZE JUDGEMENT CLAIM",
-   "tx_short": "0xa974\u202661b0",
-   "block": "51,990,062",
-   "gas": "173,043",
+   "t": "17:27:42",
+   "label": "BETTOR_2 STAKE 0.2 NO",
+   "tx_short": "0x9101\u2026f3a6",
+   "block": "51,999,336",
+   "gas": "63,311",
    "status": "OK",
    "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0xa97435884fdae73fb0d6cd92236c5c02ea71b9ebddfda70efa45bc93ccdd61b0"
+   "explorer": "https://testnet.monadscan.com/tx/0x9101144e097f8175032a1c363b5ba97efa3827b7932075cbfa227c601fa6f3a6"
   },
   {
-   "t": "16:40:31",
-   "label": "BETTOR_1 CLAIM",
-   "tx_short": "0x039c\u20269ccf",
-   "block": "51,990,069",
-   "gas": "129,409",
+   "t": "17:27:45",
+   "label": "BETTOR_2 STAKE 0.2 NO",
+   "tx_short": "0x5a09\u202639b1",
+   "block": "51,999,347",
+   "gas": "63,311",
    "status": "OK",
    "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0x039c36c08ab94ad76d246f36dafb8002a9738542abc1a6141d6d85d4b6d39ccf"
+   "explorer": "https://testnet.monadscan.com/tx/0x5a09357e3ef857c0f871c5a9c73fc3689883804a9005c4566fc6b2dc694139b1"
   },
   {
-   "t": "16:40:32",
-   "label": "BETTOR_1 WITHDRAW 0.500",
-   "tx_short": "0xfe44\u20265f76",
-   "block": "51,990,072",
-   "gas": "41,551",
+   "t": "17:27:49",
+   "label": "BETTOR_1 STAKE 0.3 YES",
+   "tx_short": "0x2253\u2026089b",
+   "block": "51,999,361",
+   "gas": "63,336",
    "status": "OK",
    "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0xfe44983077eaad9bf0614fc70b4120b83f6174b8ed3f4b21960ee67141765f76"
+   "explorer": "https://testnet.monadscan.com/tx/0x22534b3f7d10b8aedaf030813192b030b6db16a1a785c3541b9b2e6ea03e089b"
   },
   {
-   "t": "16:40:32",
-   "label": "AGENT_A WITHDRAW 0.100",
-   "tx_short": "0xd5aa\u2026f5ae",
-   "block": "51,990,075",
-   "gas": "41,551",
+   "t": "17:30:53",
+   "label": "BETTOR_2 STAKE 0.2 NO",
+   "tx_short": "0xc5e2\u202606a6",
+   "block": "51,999,965",
+   "gas": "63,311",
    "status": "OK",
    "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0xd5aac1844254214d3cae791059c033e93bd7f91d3b9d24627ee72652375bf5ae"
-  },
-  {
-   "t": "16:40:33",
-   "label": "AGENT_B WITHDRAW 0.100",
-   "tx_short": "0x9a3e\u20265c26",
-   "block": "51,990,077",
-   "gas": "41,551",
-   "status": "OK",
-   "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0x9a3eb4223748690c721f35b640e433693e63ffec88b950da7758d51be8605c26"
-  },
-  {
-   "t": "16:41:35",
-   "label": "SETTLE ARM TRUE",
-   "tx_short": "0x4536\u20265514",
-   "block": "51,990,281",
-   "gas": "99,093",
-   "status": "OK",
-   "status_kind": "ok",
-   "explorer": "https://testnet.monadscan.com/tx/0x45368fd78a0a9c5f703fac4f0141ba52f252e60ab58b57c51b3bdd92ed055514"
+   "explorer": "https://testnet.monadscan.com/tx/0xc5e211adcbb2c9d99a3b1ff5263729f0210bc474cb1943f26a8732ffee8206a6"
   }
  ],
  "sec": {
   "present": true,
   "state_kind": "present",
+  "label": "MARKET 2 \u00b7 DETERMINISTIC",
+  "title": "ARM Holdings plc FY2026 revenue exceeded $4.5 billion",
+  "claim": "ARM Holdings plc reported revenue greater than USD 4,500,000,000 for the fiscal year ended 31 March 2026.",
+  "resolved_by": "RESOLVED BY ONE SEC FILING",
+  "resolved_note": "NOTHING TO JUDGE - NO PANEL, NO BONDS, NOBODY SLASHED",
+  "cost": "COSTS ONE HTTP REQUEST",
+  "spec_hash_short": "0x26149b\u2026d2c04c",
+  "spec_hash_full": "0x26149bb79a77be99799ae4e75e03cc8681aebbbeda260b3dbcf5510ed5d2c04c",
+  "spec_uri": "https://github.com/dimknaf/monad-blitz-london/blob/main/data/claims/deterministic.md",
+  "status": "OPEN",
+  "status_kind": "open",
   "entity": "ARM HOLDINGS PLC /UK",
   "cik": "CIK 0001973239",
   "metric": "REVENUE FROM CONTRACT WITH CUSTOMER, EXCLUDING ASSESSED TAX",

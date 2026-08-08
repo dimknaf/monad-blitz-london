@@ -54,6 +54,11 @@ def fetch_concept(spec: dict) -> tuple[dict, str, str]:
         r = requests.get(url, headers={"User-Agent": identity}, timeout=30)
         r.raise_for_status()
         return r.json(), "LIVE", f"data.sec.gov - fetched {time.strftime('%H:%M:%S')}"
+    except requests.HTTPError as e:
+        raise RuntimeError(
+            f"data.sec.gov returned {e.response.status_code} - check SEC_IDENTITY. "
+            f"Refusing to fall back to cache on an identity failure."
+        )
     except Exception as e:
         cache = REPO_ROOT / spec["cache"]
         if not cache.exists():

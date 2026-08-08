@@ -129,7 +129,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hi);outline-offset:
 .panel::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
 .panel::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
 .panel-title{
-  position:absolute;top:-7px;left:11px;
+  position:absolute;top:-7px;left:11px;z-index:3;
   background:var(--panel);padding:0 7px;
   color:var(--dim);
 }
@@ -176,8 +176,28 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hi);outline-offset:
 body[data-link="down"] .linkdown{display:block}
 
 /* ---------- 2 · CLAIM ------------------------------------------------ */
-.claimwrap{padding-top:16px}
-.claim{display:flex;gap:20px;align-items:stretch}
+.claimwrap{padding-top:16px;border-left:4px solid var(--fg)}
+.claim{display:block}
+.claim-body{display:flex;gap:20px;align-items:stretch}
+
+/* ---------- market identity: two markets, one contract --------------- */
+.mkt-head-row{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  border-bottom:1px solid var(--line);
+  padding-bottom:5px;margin-bottom:6px;
+}
+.mkt-badge{
+  font-size:14px;font-weight:700;letter-spacing:.20em;
+  background:var(--fg);color:var(--bg);padding:2px 10px;white-space:nowrap;
+}
+.mkt-badge.m2{background:var(--amber)}
+.mkt-by,.mkt-cost{
+  display:flex;align-items:baseline;gap:6px;
+  font-size:12px;color:var(--dim);white-space:nowrap;
+}
+.mkt-by b,.mkt-cost b{color:var(--hi);font-weight:400}
+.mkt-cost{margin-left:auto}
+.mkt-note{font-size:11px;color:var(--amber);letter-spacing:.08em}
 .claim-main{flex:1 1 auto;min-width:0}
 .claim-title{
   font-size:22px;color:var(--hi);letter-spacing:.06em;
@@ -205,7 +225,7 @@ body[data-link="down"] .linkdown{display:block}
 .main{
   display:grid;
   grid-template-columns:minmax(0,1fr) 600px;
-  grid-template-rows:minmax(0,1fr) 272px;
+  grid-template-rows:minmax(0,1fr) 286px;
   gap:10px;min-height:0;
 }
 .agents{
@@ -220,12 +240,12 @@ body[data-link="down"] .linkdown{display:block}
 }
 .band{
   grid-area:2/1/3/3;
-  display:grid;grid-template-columns:minmax(0,1fr) 620px 560px;
+  display:grid;grid-template-columns:minmax(0,1fr) 560px 700px;
   gap:10px;min-height:0;
 }
 
 /* ---------- 3 · AGENT COLUMNS ---------------------------------------- */
-.agent{display:flex;flex-direction:column;gap:5px;overflow:hidden}
+.agent{display:flex;flex-direction:column;gap:5px;overflow:clip;overflow-clip-margin:16px}
 .agent[data-k="running"]{border-color:var(--amber)}
 .agent[data-k="failed"]{border-color:var(--bad)}
 
@@ -299,7 +319,7 @@ body[data-link="down"] .linkdown{display:block}
 .line[data-k="error"]{border-left-color:var(--bad)}
 .l-t{color:var(--dim2);flex:0 0 auto}
 .l-body{flex:1 1 auto;min-width:0}
-.l-x{color:var(--fg);word-break:break-all}
+.l-x{color:var(--fg);overflow-wrap:anywhere}
 .l-d{display:block;color:var(--dim2);font-size:11px}
 .line[data-v="false"] .l-x{color:var(--amber)}
 .line[data-v="false"] .l-d{color:var(--amber)}
@@ -329,10 +349,10 @@ body[data-link="down"] .linkdown{display:block}
 .vd-top{display:flex;justify-content:space-between;gap:14px}
 .vd-cell.right{text-align:right}
 .vd-tally{
-  font-size:31px;line-height:1.05;color:var(--hi);font-weight:700;
+  font-size:26px;line-height:1.05;color:var(--hi);font-weight:700;
   text-shadow:0 0 12px rgba(51,255,102,.4);
 }
-.vd-status{font-size:31px;line-height:1.05;font-weight:700}
+.vd-status{font-size:26px;line-height:1.05;font-weight:700}
 .vd-quorum{display:flex;align-items:baseline;gap:7px;font-size:12px}
 
 .market{margin-top:2px}
@@ -341,11 +361,11 @@ body[data-link="down"] .linkdown{display:block}
 .mkt-side.yes{color:var(--hi)}
 .mkt-side.no{color:var(--amber)}
 .mkt-implied{
-  font-size:36px;line-height:1;color:var(--hi);font-weight:700;
+  font-size:30px;line-height:1;color:var(--hi);font-weight:700;
   text-shadow:0 0 14px rgba(51,255,102,.45);
 }
 .bar{
-  height:26px;background:var(--amber);border:1px solid var(--line);
+  height:22px;background:var(--amber);border:1px solid var(--line);
   margin:3px 0;overflow:hidden;
 }
 .bar-yes{
@@ -379,7 +399,7 @@ body[data-link="down"] .linkdown{display:block}
   50%{box-shadow:0 0 16px rgba(255,59,48,.55)}
 }
 
-.bet{margin-top:2px;border-top:1px solid var(--line);padding-top:6px}
+.bet{flex:0 0 auto;margin-top:2px;border-top:1px solid var(--line);padding-top:6px}
 .bet-note{font-size:11px;letter-spacing:.16em;color:var(--dim2);margin-bottom:5px}
 .bet-btns{display:flex;gap:8px}
 .bet:not([data-v="true"]) .bet-btns{display:none}
@@ -396,8 +416,36 @@ body[data-link="down"] .linkdown{display:block}
 .betbtn[data-k="no"]:hover:not(:disabled){background:var(--amber);color:var(--bg)}
 .betbtn:disabled{opacity:.28;cursor:not-allowed}
 
+/* ---------- the primary action: RUN THE PANEL ------------------------ */
+.runctl{flex:0 0 auto;margin-top:7px;border-top:1px solid var(--line);padding-top:7px}
+.runctl:not([data-v="true"]){display:none}
+.runbtn{
+  display:block;width:100%;
+  font-family:var(--mono);font-size:23px;font-weight:700;letter-spacing:.14em;
+  padding:12px 8px;cursor:pointer;
+  background:var(--fg);color:var(--bg);border:2px solid var(--fg);
+}
+.runbtn:hover:not(:disabled){background:var(--hi);border-color:var(--hi)}
+.runbtn:disabled{cursor:not-allowed}
+.run-note{
+  font-size:11px;letter-spacing:.16em;color:var(--dim2);
+  margin-top:4px;text-align:center;
+}
+.runctl[data-k="running"] .runbtn{
+  background:transparent;color:var(--amber);border-color:var(--amber);opacity:1;
+  animation:runpulse 1.2s ease-in-out infinite;
+}
+.runctl[data-k="running"] .run-note{color:var(--amber)}
+.runctl[data-k="running"] .run-note::after{
+  content:" \2588";animation:blink 1.05s steps(1) infinite;
+}
+@keyframes runpulse{
+  0%,100%{box-shadow:0 0 0 rgba(255,176,0,0)}
+  50%{box-shadow:0 0 24px rgba(255,176,0,.65)}
+}
+
 /* ---------- 5 · POSITIONS & PAYOUT ------------------------------------ */
-.positions{display:flex;flex-direction:column;gap:6px;overflow:hidden}
+.positions{display:flex;flex-direction:column;gap:6px;overflow:clip;overflow-clip-margin:16px}
 .pos-empty{font-size:11px;letter-spacing:.20em;color:var(--dim2);padding:8px 0}
 .positions[data-v="true"] .pos-empty{display:none}
 .positions:not([data-v="true"]) .pos-body{display:none}
@@ -437,7 +485,7 @@ body[data-link="down"] .linkdown{display:block}
 .pos-tx:empty{display:none}
 
 /* ---------- SYSTEM FEED ----------------------------------------------- */
-.feedwrap{display:flex;flex-direction:column;overflow:hidden}
+.feedwrap{display:flex;flex-direction:column;overflow:clip;overflow-clip-margin:16px}
 .feed{flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:3px}
 .frow{
   display:flex;gap:9px;align-items:baseline;
@@ -449,15 +497,18 @@ body[data-link="down"] .linkdown{display:block}
   color:var(--hi);flex:0 0 auto;width:1.4em;text-align:center;
   border:1px solid var(--line);font-size:10px;
 }
-.f-x{color:var(--fg);flex:1 1 auto;min-width:0;word-break:break-all}
-.f-d{color:var(--dim2);flex:0 0 auto;font-size:11px}
+.f-x{color:var(--fg);flex:1 1 auto;min-width:0;overflow-wrap:break-word}
+.f-d{
+  color:var(--dim2);flex:0 1 auto;min-width:0;font-size:11px;text-align:right;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
 .frow[data-k="error"] .f-x{color:var(--bad)}
 .frow[data-k="chain"] .f-x{color:var(--amber)}
 .frow[data-k="submit"] .f-x{color:var(--hi)}
 .frow[data-v="false"] .f-x,.frow[data-v="false"] .f-d{color:var(--amber)}
 
 /* ---------- 6 · CHAIN LEDGER ------------------------------------------ */
-.chainwrap{display:flex;flex-direction:column;overflow:hidden}
+.chainwrap{display:flex;flex-direction:column;overflow:clip;overflow-clip-margin:16px}
 .chain-head,.crow{
   display:grid;
   grid-template-columns:66px minmax(0,1fr) 100px 84px 76px 46px;
@@ -476,15 +527,28 @@ body[data-link="down"] .linkdown{display:block}
 .c-s{font-weight:700;font-size:12px;letter-spacing:.10em}
 
 /* ---------- 7 · DETERMINISTIC / SEC ------------------------------------ */
-.sec{display:flex;flex-direction:column;gap:5px;overflow:hidden}
+.sec{display:flex;flex-direction:column;gap:5px;overflow:clip;overflow-clip-margin:16px}
 .sec-empty{font-size:11px;letter-spacing:.20em;color:var(--dim2);padding:8px 0}
 .sec[data-k="present"] .sec-empty{display:none}
 .sec:not([data-k="present"]) .sec-body{display:none}
 .sec-body{display:flex;flex-direction:column;gap:5px;min-height:0;overflow:hidden}
-.sec-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-.sec-ent{font-size:15px;color:var(--hi);letter-spacing:.04em}
+.sec{border-left:4px solid var(--amber)}
+.sec-titlerow{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.sec-title{
+  font-size:19px;color:var(--hi);letter-spacing:.04em;
+  text-shadow:0 0 8px rgba(51,255,102,.25);
+}
+.sec-hash{font-size:16px;color:var(--fg);white-space:nowrap;letter-spacing:.04em}
+.sec-claim{font-size:12px;color:var(--dim);max-height:33px;overflow:hidden}
+.sec-why{
+  font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--amber);
+  border:1px solid var(--amber);background:rgba(255,176,0,.10);
+  padding:4px 9px;
+}
+.sec-ent{font-size:13px;color:var(--hi);letter-spacing:.04em}
 .sec-cik{font-size:11px;color:var(--dim2)}
-.sec-src{text-align:right;flex:0 0 auto}
+.sec-period{font-size:11px;color:var(--dim2);margin-left:6px}
+.sec-status{font-size:12px;letter-spacing:.14em;font-weight:700;margin-top:1px}
 .badge.src{display:inline-block;font-size:11px;padding:1px 7px}
 .badge.src[data-k="live"]{background:var(--hi);color:var(--bg)}
 .badge.src[data-k="cached"]{background:var(--amber);color:var(--bg)}
@@ -496,7 +560,7 @@ body[data-link="down"] .linkdown{display:block}
   padding:5px 0;
 }
 .sec-value{
-  font-size:35px;line-height:1.05;color:var(--hi);font-weight:700;letter-spacing:.02em;
+  font-size:31px;line-height:1.05;color:var(--hi);font-weight:700;letter-spacing:.02em;
   text-shadow:0 0 12px rgba(51,255,102,.4);
 }
 .sec-thr{display:flex;align-items:baseline;gap:6px;font-size:12px;margin-top:2px}
@@ -553,6 +617,8 @@ body[data-link="down"] .linkdown{display:block}
   .cursor{animation:none}
   .slash{animation:none}
   .line.is-new .l-body,.frow.is-new,.crow.is-new{animation:none;clip-path:none}
+  .runctl[data-k="running"] .runbtn{animation:none}
+  .runctl[data-k="running"] .run-note::after{animation:none}
   .tick[data-v="true"]{animation:none}
   .bar-yes{transition:none}
 }

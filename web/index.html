@@ -55,6 +55,10 @@
           <div class="bet-note" data-f="note"></div>
           <div class="bet-btns" id="bet-btns" data-slot="buttons" data-empty="NO ACTIONS AVAILABLE"></div>
         </div>
+        <div class="runctl" id="run" data-flag="present" data-kind="kind">
+          <button class="runbtn" type="button" id="run-btn" data-disabled="disabled" data-f="label"></button>
+          <div class="run-note" data-f="note"></div>
+        </div>
       </section>
 
       <!-- ===== 5 · POSITIONS / PAYOUT ===== -->
@@ -92,40 +96,41 @@
         <h2 class="panel-title">DETERMINISTIC &middot; SEC EDGAR</h2>
         <div class="sec-empty">NO DETERMINISTIC CLAIM SETTLED YET</div>
         <div class="sec-body">
-          <div class="sec-top">
-            <div class="sec-ent-wrap">
-              <div class="mini">ENTITY</div>
-              <div class="sec-ent" data-f="entity"></div>
-              <div class="sec-cik" data-f="cik"></div>
-            </div>
-            <div class="sec-src">
-              <span class="badge src k" data-kind="source_kind" data-f="source"></span>
-              <div class="sec-note" data-f="source_note"></div>
-            </div>
+          <div class="mkt-head-row">
+            <span class="mkt-badge m2" data-f="label"></span>
+            <span class="mkt-by"><b data-f="resolved_by"></b></span>
+            <span class="mkt-cost"><b data-f="cost"></b></span>
           </div>
 
-          <div class="kv"><span class="k-lbl">METRIC</span><span class="lead"></span><span class="k-val" data-f="metric"></span></div>
-          <div class="kv"><span class="k-lbl">PERIOD</span><span class="lead"></span><span class="k-val" data-f="period"></span></div>
+          <div class="sec-titlerow">
+            <div class="sec-title" data-f="title"></div>
+            <div class="sec-hash" data-f="spec_hash_short" data-title="spec_hash_full"></div>
+          </div>
+          <div class="sec-claim" data-f="claim"></div>
+          <div class="sec-why" data-f="resolved_note"></div>
 
           <div class="sec-figure">
             <div class="sec-value-wrap">
-              <div class="mini">REPORTED VALUE</div>
+              <div class="sec-ent"><span data-f="entity"></span> <span class="sec-cik" data-f="cik"></span></div>
               <div class="sec-value" data-f="value"></div>
-              <div class="sec-thr"><span class="mini">VS</span> <span class="thr-v" data-f="threshold"></span> <span class="thr-head" data-f="headroom"></span></div>
+              <div class="sec-thr">
+                <span class="mini">VS</span> <span class="thr-v" data-f="threshold"></span>
+                <span class="thr-head" data-f="headroom"></span>
+                <span class="sec-period" data-f="period"></span>
+              </div>
             </div>
             <div class="sec-outcome k" data-kind="outcome_kind">
               <div class="mini">OUTCOME</div>
               <div class="sec-outcome-v" data-f="outcome"></div>
+              <div class="sec-status k" data-kind="status_kind" data-f="status"></div>
             </div>
           </div>
 
-          <div class="sec-receipt">
-            <div class="mini">ON-CHAIN RECEIPT &middot; FILING</div>
-            <div class="rcpt-row">
-              <span class="rcpt-form" data-f="form"></span>
-              <span class="rcpt-acc" data-f="accession"></span>
-              <span class="rcpt-filed" data-f="filed"></span>
-            </div>
+          <div class="rcpt-row">
+            <span class="badge src k" data-kind="source_kind" data-f="source"></span>
+            <span class="rcpt-form" data-f="form"></span>
+            <span class="rcpt-acc" data-f="accession"></span>
+            <span class="rcpt-filed" data-f="filed"></span>
           </div>
         </div>
       </section>
@@ -153,6 +158,13 @@
 
 <template id="tpl-claim">
   <div class="claim">
+    <div class="mkt-head-row">
+      <span class="mkt-badge" data-f="label"></span>
+      <span class="mkt-by"><b data-f="resolved_by"></b></span>
+      <span class="mkt-note" data-f="resolved_note"></span>
+      <span class="mkt-cost"><b data-f="cost"></b></span>
+    </div>
+    <div class="claim-body">
     <div class="claim-main">
       <div class="claim-title" data-f="title"></div>
       <div class="claim-text" data-f="claim"></div>
@@ -163,6 +175,7 @@
       <div class="hash-lbl">SPEC HASH</div>
       <div class="hash-val" data-f="spec_hash_short" data-title="spec_hash_full"></div>
       <div class="hash-sub">THE QUESTION IS IMMUTABLE</div>
+    </div>
     </div>
   </div>
 </template>

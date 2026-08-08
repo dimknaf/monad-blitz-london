@@ -32,12 +32,13 @@ SNIPPET_TELLS = ("via google", "search snippet", "search result", "referenced vi
                  "simulated", "ai overview", "placeholder")
 MIN_REAL_BYTES = 5000        # a 404 shell renders as ~3-4kB of text; real articles are far bigger
 # Display-only stand-in for an agent that ran out of budget. Badged on screen, never on chain.
-DEMO_FALLBACK = os.environ.get("DEMO_FALLBACK", "1") == "1"
+DEMO_FALLBACK = os.environ.get("DEMO_FALLBACK", "1") == "1"   # display only, never on chain
 
 app = Flask(__name__, static_folder=None)
 _cache: dict = {"t": 0.0, "v": None}
 _run_id = str(int(time.time()))
 _last_block = {"v": None}
+_run: dict = {"proc": None}
 
 
 # ----------------------------------------------------------------- formatting
@@ -99,12 +100,14 @@ def verify(citation: str, log: list) -> dict:
                 if e.get("arg", "").rstrip(".,:;") == u and e.get("ok")
                 and e.get("bytes", 0) >= MIN_REAL_BYTES), None)
 
-    if tell:
-        ok, detail = False, f"cited via '{tell.strip()}' - a snippet is not an opened document"
-    elif not u:
+    if not u:
         ok, detail = False, "no URL in citation"
     elif hit:
-        ok, detail = True, f"opened in this run - {hit['bytes']:,} B in {hit['elapsed']}s"
+        # An actual fetch is dispositive. Checking the prose first would defame a real source
+        # because the model happened to write the words "search result" beside it.
+        ok, detail = True, f"opened in this run - {hit['bytes']:,} B in {hit.get('elapsed', 0)}s"
+    elif tell:
+        ok, detail = False, f"cited via '{tell.strip()}' - a snippet is not an opened document"
     else:
         thin = next((e for e in log if e.get("arg", "").rstrip(".,:;") == u), None)
         detail = (f"fetched but only {thin.get('bytes', 0):,} B - too thin to be the source"
@@ -138,8 +141,11 @@ def chain_state() -> dict:
         n_att = contract.functions.attestationCount(cid).call()
         yes = sum(1 for i in range(n_att) if contract.functions.attestations(cid, i).call()[1])
 
+        card = MARKET_CARD[kind]
         claims.append({
             "id": cid, "kind": kind, "title": cm["title"],
+            "label": card["label"], "resolved_by": card["resolved_by"],
+            "resolved_note": card["resolved_note"], "cost": card["cost"],
             "claim": claim_body(kind),
             "spec_hash_full": "0x" + cm["spec_hash"], "spec_hash_short": short("0x" + cm["spec_hash"], 8, 6),
             "spec_uri": cm["spec_uri"],
@@ -148,6 +154,7 @@ def chain_state() -> dict:
             "pool_yes": mon(c[5], 2), "pool_no": mon(c[6], 2),
             "quorum_label": f"{c[4]} OF 3", "attestations": str(n_att),
             "tally": f"{yes} YES / {n_att - yes} NO" if n_att else "NO ATTESTATIONS YET",
+            "slashed": slashed_list(contract, cid, c, n_att, bond_wei),
         })
 
         if kind == "judgement":
@@ -177,6 +184,37 @@ def chain_state() -> dict:
         "claims": claims, "market": market, "bet_controls": controls, "balances": balances,
         "_bond": bond_wei,
     }
+
+
+def slashed_list(contract, cid, c, n_att, bond_wei) -> list:
+    """Who actually lost a bond. Read back from the attestations against the resolved status —
+    the slash is the headline mechanic and the panel showing it was hardcoded empty."""
+    if c[7] not in (1, 2) or not n_att:          # ResolvedYes / ResolvedNo only
+        return []
+    outcome = c[7] == 1
+    out = []
+    for i in range(n_att):
+        a = contract.functions.attestations(cid, i).call()
+        if a[1] != outcome:
+            out.append({"agent": short(a[0]), "address_short": short(a[0]),
+                        "amount": mon(a[2], 1)})
+    return out
+
+
+MARKET_CARD = {
+    "judgement": {
+        "label": "MARKET 1 · JUDGEMENT",
+        "resolved_by": "RESOLVED BY THREE BONDED ORACLES",
+        "resolved_note": "NO FEED EXISTS - AGENTS JUDGE, AND ARE SLASHED WHEN THEY ARE WRONG",
+        "cost": "COSTS A RESEARCH BOUNTY",
+    },
+    "deterministic": {
+        "label": "MARKET 2 · DETERMINISTIC",
+        "resolved_by": "RESOLVED BY ONE SEC FILING",
+        "resolved_note": "NOTHING TO JUDGE - NO PANEL, NO BONDS, NOBODY SLASHED",
+        "cost": "COSTS ONE HTTP REQUEST",
+    },
+}
 
 
 def market_state(w3, contract, cid, c, status, kinds):
@@ -269,8 +307,20 @@ def agent_state() -> tuple[list, list]:
         log = read_jsonl(OUT / f"tools_{key}.jsonl")
         res = read_json(OUT / f"agent_{key}.json")
 
-        lines = []
+        lines, prev_end = [], None
         for e in log:
+            # The gap between one tool returning and the next being called IS the model
+            # thinking. Showing it turns a list of fetches into an agent visibly working.
+            think = (e["ts"] - e.get("elapsed", 0)) - prev_end if prev_end else 0
+            if think > 1.5:
+                gap = {"t": clock(prev_end), "kind": "think", "ok": True,
+                       "text": "reasoning over what it just read",
+                       "detail": f"{think:.1f}s of deliberation"}
+                lines.append(gap)
+                feed.append({**gap, "_ts": prev_end, "agent": key,
+                             "text": f"{PANEL_SHORT[key]} is reasoning over what it just read"})
+            prev_end = e["ts"]
+
             k, text, detail = narrate(e)
             lines.append({"t": clock(e["ts"]), "kind": k, "ok": bool(e.get("ok")),
                           "text": text, "detail": detail})
@@ -278,6 +328,17 @@ def agent_state() -> tuple[list, list]:
                          "ok": bool(e.get("ok")),
                          "text": f"{PANEL_SHORT[key]} {text[0].lower() + text[1:]}",
                          "detail": detail})
+
+        # The quotes that actually decided it — the most interesting thing an agent produces.
+        if res and res.get("ok"):
+            for c in res.get("citations", []):
+                q = quote_of(c)
+                if q:
+                    ev = {"t": clock(prev_end or 0), "_ts": (prev_end or 0) + 0.1, "agent": key,
+                          "kind": "quote", "ok": True,
+                          "text": f"{PANEL_SHORT[key]} quotes: “{q[:150]}”",
+                          "detail": pretty_url(url_of(c))}
+                    feed.append(ev)
 
         if res is None:
             st, sk = ("RESEARCHING", "running") if key in active else ("WAITING", "waiting")
@@ -302,7 +363,7 @@ def agent_state() -> tuple[list, list]:
                 "key": key, "name": PANEL_NAMES[key], "brief": PANEL_BRIEFS[key],
                 "address_short": short(chain.os.environ.get(f"{chain.ORACLES[AGENT_KEYS.index(key)]}_ADDR", "")),
                 "status": "FALLBACK", "status_kind": "failed",
-                "verdict": "YES", "verdict_kind": "yes",
+                "verdict": "PLACEHOLDER", "verdict_kind": "none",
                 "confidence": "—", "confidence_pct": 0,
                 "reasoning": "DEMO FALLBACK — this agent did not finish its research in budget. "
                              "The verdict shown is a placeholder, it is NOT a research result, "
@@ -365,7 +426,7 @@ def narrate(e: dict) -> tuple[str, str, str]:
     if tool in ("search_google", "firecrawl_search"):
         if not ok:
             return "error", f"search failed: “{arg[:70]}”", f"{note or 'no results'} — trying another route"
-        return "search", f"searched for “{arg[:80]}”", f"{secs}s"
+        return "search", f"searched the web: “{arg[:110]}”", f"results back in {secs}s"
 
     if tool == "submit_result":
         return "submit", f"submitted its verdict — {arg.replace('verdict=True', 'YES').replace('verdict=False', 'NO')}", note
@@ -382,8 +443,8 @@ def narrate(e: dict) -> tuple[str, str, str]:
         return "error", f"could not open {source_name(arg)}", f"{why} after {secs}s — it will find another source"
 
     pages = re.search(r"pdf (\d+)p", note)
-    what = f"{pages.group(1)}-page filing" if pages else "page"
-    return "fetch", f"read {source_name(arg)}", f"{what}, {e.get('bytes', 0):,} characters in {secs}s"
+    what = f"{pages.group(1)}-page filing" if pages else "web page"
+    return "fetch", f"opened {source_name(arg)} and read it in full",            f"{what}, {e.get('bytes', 0):,} characters pulled in {secs}s"
 
 
 PANEL_NAMES = {"A": "PRIMARY SOURCE ANALYST", "B": "SELL-SIDE ANALYST", "C": "FINANCIAL PRESS ANALYST"}
@@ -403,6 +464,9 @@ def oracle_outcomes(agents: list, claims: list, bond_wei: int):
     w3 = chain.connect()
     contract, _ = chain.load_contract(w3)
     for a in agents:
+        if a["status_kind"] == "failed":       # placeholder verdict: never scored, never on chain
+            a["outcome"], a["outcome_kind"], a["bond"] = "NOT ON CHAIN", "none", "-"
+            continue
         addr = chain.os.environ.get(f"{chain.ORACLES[AGENT_KEYS.index(a['key'])]}_ADDR")
         if not addr or not contract.functions.hasAttested(j["id"], addr).call():
             a["outcome"], a["outcome_kind"], a["bond"] = "NO BOND AT RISK", "none", "—"
@@ -413,13 +477,16 @@ def oracle_outcomes(agents: list, claims: list, bond_wei: int):
         a["outcome_kind"] = "majority" if won else "slashed"
 
 
-def sec_state() -> dict:
+def sec_state(claims: list) -> dict:
+    """Market 2. It carries its own claim text and spec hash so it reads as a market in its
+    own right rather than a stray SEC readout parked beside an unrelated TSMC page."""
+    det = next((c for c in claims if c["kind"] == "deterministic"), {})
     r = read_json(OUT / "sec_arm.json")
     if not r:
-        return {"present": False, "state_kind": "absent"}
+        return {"present": False, "state_kind": "absent", **_card(det)}
     head = (r["value"] - r["threshold"]) / r["threshold"] * 100
     return {
-        "present": True, "state_kind": "present",
+        "present": True, "state_kind": "present", **_card(det),
         "entity": r["entity"], "cik": f"CIK {r['cik']}", "metric": r["metric"].upper(),
         "period": r["period"].upper(), "value": f"${r['value']:,}",
         "threshold": f"> ${r['threshold']:,}", "headroom": f"+{head:.1f}% HEADROOM",
@@ -439,6 +506,20 @@ def ledger() -> list:
     } for e in read_jsonl(OUT / "chain.jsonl")]
 
 
+def _card(c: dict) -> dict:
+    return {
+        "label": c.get("label", "MARKET 2 · DETERMINISTIC"),
+        "title": c.get("title", ""), "claim": c.get("claim", ""),
+        "resolved_by": c.get("resolved_by", "RESOLVED BY ONE SEC FILING"),
+        "resolved_note": c.get("resolved_note", "NOTHING TO JUDGE - NO PANEL, NO BONDS"),
+        "cost": c.get("cost", "COSTS ONE HTTP REQUEST"),
+        "spec_hash_short": c.get("spec_hash_short", ""),
+        "spec_hash_full": c.get("spec_hash_full", ""),
+        "spec_uri": c.get("spec_uri", ""),
+        "status": c.get("status", ""), "status_kind": c.get("status_kind", "open"),
+    }
+
+
 PHASES = [("done", "COMPLETE"), ("settling", "SETTLING ON CHAIN"),
           ("voting", "ORACLES ATTESTING"), ("research", "PANEL RESEARCHING"), ("idle", "STANDING BY")]
 
@@ -447,7 +528,7 @@ def build_state() -> dict:
     cs = chain_state()
     agents, feed = agent_state()
     oracle_outcomes(agents, cs["claims"], cs.pop("_bond"))
-    sec = sec_state()
+    sec = sec_state(cs["claims"])
 
     j = next((c for c in cs["claims"] if c["kind"] == "judgement"), None)
     if j and j["status_kind"] in ("yes", "no", "void"):
@@ -458,8 +539,21 @@ def build_state() -> dict:
         kind, label = "research", "PANEL RESEARCHING"
     else:
         kind, label = "idle", "STANDING BY"
-    cs["meta"]["phase"], cs["meta"]["phase_kind"] = label, kind
+    cs["meta"]["phase_label"], cs["meta"]["phase_kind"] = label, kind
 
+    live = bool(_run["proc"] and _run["proc"].poll() is None)
+    staked = any(p["stake"] != "0.00 MON" for p in (cs.get("market") or {}).get("positions", []))
+    if live:
+        note, label = "PANEL RUNNING - RESEARCH IN PROGRESS", "RUNNING..."
+    elif staked:
+        note, label = "BETS ARE IN - START THE ORACLES", "▸ RUN THE PANEL"
+    else:
+        note, label = "PLACE A BET FIRST, THEN RUN THE PANEL", "▸ RUN THE PANEL"
+    cs["run_controls"] = {
+        "present": True, "note": note, "label": label,
+        "running": live, "disabled": live,
+        "kind": "running" if live else "ready",
+    }
     return {**cs, "agents": agents, "feed": feed, "chain": ledger(), "sec": sec}
 
 
@@ -528,15 +622,33 @@ def api_bet():
         return jsonify({"ok": False, "error": "unknown button"}), 400
     try:
         chain.bet(*pick)
-        write_state(build_state_resilient())   # repaint immediately, don't wait for the tick
-        return jsonify({"ok": True})
     except SystemExit as e:
         return jsonify({"ok": False, "error": str(e)}), 400
+    try:
+        write_state(build_state_resilient())   # repaint now rather than waiting for the tick
+    except Exception:
+        pass    # the stake LANDED. A rate-limited repaint must not report the click as failed;
+                # the 2s refresher will catch up on its own.
+    return jsonify({"ok": True})
 
 
 @app.post("/api/run")
 def api_run():
-    subprocess.Popen([sys.executable, str(REPO_ROOT / "run_demo.py")], cwd=str(REPO_ROOT))
+    """RUN THE PANEL. One button starts the whole thing and the page narrates it live.
+
+    Bets are placed before this; from here it is research -> attest -> finalize -> payout ->
+    settle, with every step appending to out/chain.jsonl so the page tells the story itself.
+    """
+    if _run["proc"] and _run["proc"].poll() is None:
+        return jsonify({"ok": False, "error": "already running"}), 409
+    for k in AGENT_KEYS:                      # clear the last run so columns start empty
+        (OUT / f"agent_{k}.json").unlink(missing_ok=True)
+        (OUT / f"tools_{k}.jsonl").unlink(missing_ok=True)
+    env = {**os.environ, "PYTHONUTF8": "1", "PYTHONIOENCODING": "utf-8"}
+    _run["proc"] = subprocess.Popen(
+        [sys.executable, str(REPO_ROOT / "run_demo.py")], cwd=str(REPO_ROOT),
+        stdin=subprocess.DEVNULL, stdout=open(REPO_ROOT / "out" / "run.log", "w", encoding="utf-8"),
+        stderr=subprocess.STDOUT, env=env)
     return jsonify({"ok": True})
 
 

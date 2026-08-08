@@ -45,6 +45,8 @@ def main() -> int:
         run("chain.py", "bet", "BETTOR_1", "yes", "0.3", label="BET 0.3 MON on YES")
         run("chain.py", "bet", "BETTOR_2", "no", "0.2", label="BET 0.2 MON on NO")
 
+    # Bets are already in by the time this runs — they are placed from the page, before the
+    # oracles start, which is the correct order: you take a position without knowing the answer.
     run("panel.py", label="RESEARCH - three oracles, in parallel")
     run("chain.py", "attest", label="ATTEST - bonded verdicts on chain")
     run("chain.py", "finalize", label="FINALIZE - tally and slash")

@@ -111,7 +111,48 @@ Generate the six throwaway keys with `eth_account`, then fund COORD from the
 [Monad testnet faucet](https://testnet.monad.xyz) and run `python agents/chain.py fund` to
 distribute. Oracles are funded above ~10 MON so Monad's reserve-balance throttle never bites.
 
-### 3 · Deploy and run
+### 3 · Run the demo — you control every step
+
+```bash
+python agents/server.py       # the console -> http://127.0.0.1:8080
+```
+
+Then drive it from the page and one terminal:
+
+| # | You do | What happens |
+|---|---|---|
+| 1 | `python agents/chain.py open judgement` | A fresh claim opens. The spec is hashed on chain — the question is now immutable. Price reads 50/50 because nothing is staked. |
+| 2 | **Click `STAKE 0.3 MON ▸ YES`** on the page | A real transaction. The implied probability moves. |
+| 3 | **Click `STAKE 0.2 MON ▸ NO`** | Someone takes the other side. Price settles to the pool ratio, 60%. |
+| 4 | **Click `▸ RUN THE PANEL`** | The three oracles start researching. Their tool calls, page fetches and quotes stream onto the page live, then verdicts land, bonds are posted, the contract finalizes and slashes, and the winning bettor collects. |
+
+**Bets go in before the oracles start** — that is the whole point: you take a position without knowing the answer.
+
+Prefer the terminal? Every step is a command:
+
+```bash
+python agents/panel.py           # the three oracles research, in parallel
+python agents/chain.py attest    # each oracle posts its verdict + 0.1 MON bond
+python agents/chain.py finalize  # contract tallies, slashes the minority
+python agents/chain.py payout    # winning bettor collects the losing pool
+python agents/chain.py settle    # market 2 settles from the SEC filing
+python agents/chain.py status    # balances, claims, implied probability
+```
+
+`python run_demo.py` runs steps 4 onward in one go.
+
+### Two markets, one contract
+
+| | Market 1 · Judgement | Market 2 · Deterministic |
+|---|---|---|
+| Claim | TSMC signalled accelerating AI demand | ARM FY2026 revenue > $4.5bn |
+| Resolved by | three bonded oracles, majority wins | one SEC filing |
+| Cost | a research bounty | one HTTP request |
+| Slashing | minority loses its bond | nobody — nothing to judge |
+
+Same contract, same market primitive. The contrast is the point.
+
+### 4 · Deploy from scratch
 
 ```bash
 python agents/chain.py deploy       # writes out/contract.json

@@ -24,6 +24,7 @@
 
   var STATE_URL = 'state.json';   /* Flask serves this live at the same path */
   var BET_URL   = '/api/bet';
+  var RUN_URL   = '/api/run';
   var POLL_MS   = 500;
 
   /* ---- the only three value guards in this file --------------------- */
@@ -123,6 +124,14 @@
     });
   }
 
+  /* Same shape as wireBet: POST and nothing else. The static node lives
+     in index.html, so this is wired once at start-up.                   */
+  function wireRun(node) {
+    node.addEventListener('click', function () {
+      fetch(RUN_URL, { method: 'POST' }).catch(noop);
+    });
+  }
+
   /* ---- render -------------------------------------------------------
      Loops and copies. Any section may be absent: list()/map() turn that
      into an empty loop, and CSS :empty renders the calm placeholder.   */
@@ -157,6 +166,8 @@
     bind(byId('bet'), bc);
     keyed(byId('bet-btns'), list(bc.buttons), 'tpl-betbtn', run + '|bet', wireBet);
 
+    bind(byId('run'), map(p.run_controls));
+
     appendNew(byId('feed'),  list(p.feed),  'tpl-feed');
     appendNew(byId('chain'), list(p.chain), 'tpl-chain');
     keyed(byId('balances'), list(p.balances), 'tpl-bal', run + '|bal', noop);
@@ -177,6 +188,7 @@
       .then(up, down);
   }
 
+  wireRun(byId('run-btn'));
   poll();
   setInterval(poll, POLL_MS);
 })();

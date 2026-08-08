@@ -102,7 +102,7 @@ def main() -> int:
         if not r.get("ok"):
             print(f"NOTE: agent {r['agent']} did not complete - no bond posted, not counted as a vote")
     print("\n" + "=" * 100)
-    if not results:
+    if not voted:
         outcome = "NO QUORUM"
     elif yes == no:
         outcome = "VOID (tie — bonds refunded, nobody slashed)"
@@ -110,7 +110,7 @@ def main() -> int:
         outcome = f"RESOLVED_{'YES' if yes > no else 'NO'}"
     print(f"TALLY: {yes} yes / {no} no   ->   {outcome}")
     if yes and no:
-        dissent = [r["agent"] for r in results if r["verdict"] != (yes > no)]
+        dissent = [r["agent"] for r in voted if r["verdict"] != (yes > no)]
         print(f"DISSENT: agent(s) {', '.join(dissent)} — bond slashed to the majority")
     return 0
 

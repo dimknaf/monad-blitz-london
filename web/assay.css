@@ -674,3 +674,8 @@ html, body { height: auto !important; overflow: visible !important; }
 .betbtn { min-height: 38px !important; height: auto !important; font-size: 15px !important; padding: 8px !important; }
 .runbtn { min-height: 52px !important; height: auto !important; font-size: 21px !important; padding: 10px !important; }
 .runctl { margin: 10px 0 18px !important; }
+
+/* The CRT overlays are decoration and must NEVER intercept a click.
+   After the layout change they were swallowing the bet/run buttons. */
+.crt-scan, .crt-flicker, .crt-vig { pointer-events: none !important; }
+.betbtn, .runbtn { pointer-events: auto !important; cursor: pointer !important; }

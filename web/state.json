@@ -1,13 +1,13 @@
 {
  "meta": {
   "chain_label": "MONAD TESTNET \u00b7 CHAIN 10143",
-  "block": "52,005,146",
+  "block": "52,005,344",
   "block_changed": true,
   "contract_short": "0xA3A0\u20267BA5F",
   "contract_full": "0xA3A015F68289c9f4D959788CBddcc43655f7BA5F",
   "explorer": "https://testnet.monadscan.com/address/0xA3A015F68289c9f4D959788CBddcc43655f7BA5F",
   "bond": "0.1 MON",
-  "updated": "17:57:19",
+  "updated": "17:58:17",
   "run_id": "1786208106",
   "phase_label": "STANDING BY",
   "phase_kind": "idle"
@@ -27,10 +27,10 @@
    "spec_uri": "https://github.com/dimknaf/monad-blitz-london/blob/main/data/claims/judgement.md",
    "status": "OPEN",
    "status_kind": "open",
-   "implied_yes_pct": 100,
-   "implied_yes_label": "100%",
+   "implied_yes_pct": 85,
+   "implied_yes_label": "85%",
    "pool_yes": "1.20 MON",
-   "pool_no": "0.00 MON",
+   "pool_no": "0.20 MON",
    "quorum_label": "2 OF 3",
    "attestations": "0",
    "tally": "NO ATTESTATIONS YET",
@@ -78,6 +78,19 @@
     "profit": "-1.20 MON",
     "profit_kind": "down",
     "balance_after": "0.271 MON"
+   },
+   {
+    "who": "BETTOR 2",
+    "address_short": "0x6E76\u20265F2A",
+    "side": "NO",
+    "side_kind": "no",
+    "stake": "0.20 MON",
+    "status": "OPEN",
+    "status_kind": "open",
+    "payout": "0.00 MON",
+    "profit": "-0.20 MON",
+    "profit_kind": "down",
+    "balance_after": "1.290 MON"
    }
   ]
  },
@@ -141,17 +154,17 @@
    "name": "BETTOR 2",
    "role": "BETTOR",
    "address_short": "0x6E76\u20265F2A",
-   "mon": "1.500",
-   "mon_label": "1.500 MON"
+   "mon": "1.290",
+   "mon_label": "1.290 MON"
   }
  ],
  "run_controls": {
   "present": true,
-  "note": "BETS ARE IN - START THE ORACLES",
-  "label": "\u25b8 RUN THE PANEL",
-  "running": false,
-  "disabled": false,
-  "kind": "ready"
+  "note": "PANEL RUNNING - RESEARCH IN PROGRESS",
+  "label": "RUNNING...",
+  "running": true,
+  "disabled": true,
+  "kind": "running"
  },
  "agents": [
   {
@@ -296,6 +309,16 @@
    "status": "OK",
    "status_kind": "ok",
    "explorer": "https://testnet.monadscan.com/tx/0xdb18c84b810dd49dfa7cbb97a339d0b7622b5024dbcf0927f2f96daae56038d1"
+  },
+  {
+   "t": "17:57:39",
+   "label": "BETTOR_2 STAKE 0.2 NO",
+   "tx_short": "0x2289\u2026bb1c",
+   "block": "52,005,229",
+   "gas": "97,647",
+   "status": "OK",
+   "status_kind": "ok",
+   "explorer": "https://testnet.monadscan.com/tx/0x228936fad8e7f97f6d92fc58ea43d7367a0c367355b7ea52edbc6e7eb95cbb1c"
   }
  ],
  "sec": {

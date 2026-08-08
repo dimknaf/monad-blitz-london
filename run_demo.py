@@ -36,7 +36,7 @@ def main() -> int:
     reset = "--reset" in sys.argv
     t0 = time.time()
 
-    print("ASSAY - agents that get paid to judge reality, and get slashed when they're wrong")
+    print("VALUE ORACLE - agents that get paid to judge reality, and get slashed when they're wrong")
     run("chain.py", "status", label="PREFLIGHT")
 
     if reset:

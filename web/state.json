@@ -1,14 +1,14 @@
 {
  "meta": {
   "chain_label": "MONAD TESTNET \u00b7 CHAIN 10143",
-  "block": "52,002,589",
+  "block": "52,003,221",
   "block_changed": true,
   "contract_short": "0xA3A0\u20267BA5F",
   "contract_full": "0xA3A015F68289c9f4D959788CBddcc43655f7BA5F",
   "explorer": "https://testnet.monadscan.com/address/0xA3A015F68289c9f4D959788CBddcc43655f7BA5F",
   "bond": "0.1 MON",
-  "updated": "17:44:13",
-  "run_id": "1786207139",
+  "updated": "17:47:28",
+  "run_id": "1786207475",
   "phase_label": "STANDING BY",
   "phase_kind": "idle"
  },

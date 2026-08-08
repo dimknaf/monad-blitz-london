@@ -140,7 +140,7 @@ def first_url(text: str) -> str:
 def deploy():
     w3 = connect()
     coord = acct("COORD")
-    b = int(os.environ.get("ASSAY_BOND_WEI", 10**17))
+    b = int(os.environ.get("VALUE ORACLE_BOND_WEI", 10**17))
     abi = json.loads((REPO_ROOT / "contracts" / "Assay.abi.json").read_text())
     bytecode = (REPO_ROOT / "contracts" / "Assay.bin").read_text().strip()
     print(f"deploying Assay (bond {b/1e18} MON) from {coord.address} ({w3.eth.get_balance(coord.address)/1e18:.2f} MON)")

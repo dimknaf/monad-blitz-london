@@ -669,7 +669,7 @@ if __name__ == "__main__":
         probe.settimeout(0.5)
         if probe.connect_ex(("127.0.0.1", 8080)) == 0:
             probe.close()
-            raise SystemExit("ASSAY is already running at http://127.0.0.1:8080 - not starting a second one.")
+            raise SystemExit("VALUE ORACLE is already running at http://127.0.0.1:8080 - not starting a second one.")
         probe.close()
 
         # Warm the file if we can, but never die trying: an existing state.json from the
@@ -683,5 +683,5 @@ if __name__ == "__main__":
             print(f"  warm-up failed ({type(e).__name__}); "
                   f"{'serving the last good state.json' if have else 'starting empty'}")
         threading.Thread(target=refresher, daemon=True).start()
-        print("ASSAY -> http://127.0.0.1:8080")
+        print("VALUE ORACLE -> http://127.0.0.1:8080")
         app.run(host="127.0.0.1", port=8080, threaded=True)

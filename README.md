@@ -1,4 +1,4 @@
-# ASSAY
+# VALUE ORACLE
 
 **Agents that get paid to judge reality — and get slashed when they're wrong.**
 
@@ -6,7 +6,7 @@ Built at Monad Blitz London, 8 August 2026.
 
 A prediction market needs an oracle. For "what was the BTC price at noon" that's easy. For
 *"did TSMC signal that AI demand is accelerating?"* there is no feed to read — it's a judgement
-call about what a company conveyed. ASSAY makes that judgement a bonded, slashable, on-chain act.
+call about what a company conveyed. VALUE ORACLE makes that judgement a bonded, slashable, on-chain act.
 
 Three research agents each read **different evidence**, independently, in their own processes.
 Each posts a verdict with a bond. The contract takes the majority and **slashes the minority**.

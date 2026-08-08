@@ -1,4 +1,4 @@
-# ASSAY — 3-minute run sheet
+# VALUE ORACLE — 3-minute run sheet
 
 **Page:** http://127.0.0.1:8080 — already open, claim #2 is OPEN at 50%.
 **Terminal:** `cd c:\Users\dimkn\source\repos\random\blitz-hackathon`

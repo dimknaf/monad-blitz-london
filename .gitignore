@@ -1,0 +1,70 @@
+# --- Working notes and local tooling (deliberately NOT published) ---
+.claude/
+docs/
+*.plan.md
+
+# --- Secrets: never commit these ---
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+secrets*.json
+keystore/
+wallet.json
+mnemonic*
+private-key*
+
+# --- Node ---
+node_modules/
+.next/
+.turbo/
+dist/
+build/
+out/
+*.tsbuildinfo
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+
+# --- Foundry / Solidity ---
+cache/
+cache_forge/
+artifacts/
+broadcast/
+lib/forge-std/
+typechain/
+typechain-types/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Misc ---
+.vercel
+coverage/
+*.local
+
+# 720KB SEC dump - keep local, never commit
+arm_facts.json
+
+# Browser profiles - cookie jars are credentials, NEVER commit
+session/
+
+# agent run artefacts
+out/
+agents/*.log

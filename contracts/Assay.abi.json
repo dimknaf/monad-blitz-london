@@ -1,0 +1,594 @@
+[
+ {
+  "inputs": [],
+  "name": "AlreadyAttested",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "BadBond",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "NoQuorum",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "NotOpen",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "NotOpener",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "NothingToClaim",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "TooEarly",
+  "type": "error"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "uint256",
+    "name": "id",
+    "type": "uint256"
+   },
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "agent",
+    "type": "address"
+   },
+   {
+    "indexed": false,
+    "internalType": "bool",
+    "name": "verdict",
+    "type": "bool"
+   },
+   {
+    "indexed": false,
+    "internalType": "string",
+    "name": "evidenceURI",
+    "type": "string"
+   }
+  ],
+  "name": "Attested",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "uint256",
+    "name": "id",
+    "type": "uint256"
+   },
+   {
+    "indexed": false,
+    "internalType": "bytes32",
+    "name": "specHash",
+    "type": "bytes32"
+   },
+   {
+    "indexed": false,
+    "internalType": "string",
+    "name": "specURI",
+    "type": "string"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint8",
+    "name": "quorum",
+    "type": "uint8"
+   }
+  ],
+  "name": "ClaimOpened",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "uint256",
+    "name": "id",
+    "type": "uint256"
+   },
+   {
+    "indexed": false,
+    "internalType": "enum Assay.Status",
+    "name": "status",
+    "type": "uint8"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint256",
+    "name": "yes",
+    "type": "uint256"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint256",
+    "name": "no",
+    "type": "uint256"
+   }
+  ],
+  "name": "Finalized",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "uint256",
+    "name": "id",
+    "type": "uint256"
+   },
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "agent",
+    "type": "address"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint256",
+    "name": "amount",
+    "type": "uint256"
+   }
+  ],
+  "name": "Slashed",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "uint256",
+    "name": "id",
+    "type": "uint256"
+   },
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "who",
+    "type": "address"
+   },
+   {
+    "indexed": false,
+    "internalType": "bool",
+    "name": "side",
+    "type": "bool"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint256",
+    "name": "amount",
+    "type": "uint256"
+   }
+  ],
+  "name": "Staked",
+  "type": "event"
+ },
+ {
+  "inputs": [],
+  "name": "BOND",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "id",
+    "type": "uint256"
+   },
+   {
+    "internalType": "bool",
+    "name": "verdict",
+    "type": "bool"
+   },
+   {
+    "internalType": "string",
+    "name": "evidenceURI",
+    "type": "string"
+   }
+  ],
+  "name": "attest",
+  "outputs": [],
+  "stateMutability": "payable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "id",
+    "type": "uint256"
+   }
+  ],
+  "name": "attestationCount",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   },
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "name": "attestations",
+  "outputs": [
+   {
+    "internalType": "address",
+    "name": "agent",
+    "type": "address"
+   },
+   {
+    "internalType": "bool",
+    "name": "verdict",
+    "type": "bool"
+   },
+   {
+    "internalType": "uint256",
+    "name": "bond",
+    "type": "uint256"
+   },
+   {
+    "internalType": "string",
+    "name": "evidenceURI",
+    "type": "string"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "id",
+    "type": "uint256"
+   }
+  ],
+  "name": "claim",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "claimCount",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   },
+   {
+    "internalType": "address",
+    "name": "",
+    "type": "address"
+   }
+  ],
+  "name": "claimed",
+  "outputs": [
+   {
+    "internalType": "bool",
+    "name": "",
+    "type": "bool"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "name": "claims",
+  "outputs": [
+   {
+    "internalType": "bytes32",
+    "name": "specHash",
+    "type": "bytes32"
+   },
+   {
+    "internalType": "string",
+    "name": "specURI",
+    "type": "string"
+   },
+   {
+    "internalType": "address",
+    "name": "opener",
+    "type": "address"
+   },
+   {
+    "internalType": "uint64",
+    "name": "resolveAfter",
+    "type": "uint64"
+   },
+   {
+    "internalType": "uint8",
+    "name": "quorum",
+    "type": "uint8"
+   },
+   {
+    "internalType": "uint256",
+    "name": "poolYes",
+    "type": "uint256"
+   },
+   {
+    "internalType": "uint256",
+    "name": "poolNo",
+    "type": "uint256"
+   },
+   {
+    "internalType": "enum Assay.Status",
+    "name": "status",
+    "type": "uint8"
+   },
+   {
+    "internalType": "string",
+    "name": "evidence",
+    "type": "string"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "",
+    "type": "address"
+   }
+  ],
+  "name": "credits",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "id",
+    "type": "uint256"
+   }
+  ],
+  "name": "finalize",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   },
+   {
+    "internalType": "address",
+    "name": "",
+    "type": "address"
+   }
+  ],
+  "name": "hasAttested",
+  "outputs": [
+   {
+    "internalType": "bool",
+    "name": "",
+    "type": "bool"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "id",
+    "type": "uint256"
+   }
+  ],
+  "name": "impliedYes",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "bytes32",
+    "name": "specHash",
+    "type": "bytes32"
+   },
+   {
+    "internalType": "string",
+    "name": "specURI",
+    "type": "string"
+   },
+   {
+    "internalType": "uint64",
+    "name": "resolveAfter",
+    "type": "uint64"
+   },
+   {
+    "internalType": "uint8",
+    "name": "quorum",
+    "type": "uint8"
+   }
+  ],
+  "name": "openClaim",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "id",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "id",
+    "type": "uint256"
+   },
+   {
+    "internalType": "bool",
+    "name": "outcome",
+    "type": "bool"
+   },
+   {
+    "internalType": "string",
+    "name": "evidenceURI",
+    "type": "string"
+   }
+  ],
+  "name": "settleDeterministic",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "id",
+    "type": "uint256"
+   },
+   {
+    "internalType": "bool",
+    "name": "side",
+    "type": "bool"
+   }
+  ],
+  "name": "stake",
+  "outputs": [],
+  "stateMutability": "payable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   },
+   {
+    "internalType": "address",
+    "name": "",
+    "type": "address"
+   }
+  ],
+  "name": "stakeNo",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   },
+   {
+    "internalType": "address",
+    "name": "",
+    "type": "address"
+   }
+  ],
+  "name": "stakeYes",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "withdraw",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ }
+]
